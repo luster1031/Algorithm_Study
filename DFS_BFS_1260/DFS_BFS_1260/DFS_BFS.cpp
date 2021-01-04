@@ -2,11 +2,8 @@
 #define MAX 1001
 
 int matrix[MAX][MAX] = { 0 };
-
 int flag[MAX] = { 0 };
 int DFS[MAX] = { 0 };
-int rear = -1;
-int fromt = -1;
 
 int main() {
 	int number, frist, second;
@@ -33,6 +30,7 @@ int main() {
 				i = j;
 				j = N;
 				//dfs(i, matrix, flag,N);
+
 			}
 		}
 		if (col_count == 0) {
@@ -53,7 +51,6 @@ int main() {
 
 	DFS[count] = number;
 	flag[number] = count;
-	
 		col_count = 1;
 		for (int k = count - col_count + 1; k <= count; k++) {
 			for (int j = 1; j <= N; j++) {
@@ -64,14 +61,9 @@ int main() {
 				}
 			}
 		}
-	
 		for (int i = 1; DFS[i] != 0; i++) {
 			printf("%d ", DFS[i]);
 		}
-	
-
-
-
 	return 0;
 }
 
