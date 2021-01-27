@@ -1,0 +1,107 @@
+#include<stdio.h>
+
+int main() {
+
+	int N;
+	int score[1001][2] = { 0 };//위치, 높이
+	int location_arr[1001] = { -1 };//location별로 행 번호 저장
+	int max_loction = 0;
+	int max_high = 0;
+	int max_high_row = 0; //높이 최댓값 행
+	int max_location_row = 0; //높이 최댓값 행
+	int area = 0;
+	scanf("%d", &N);
+	//받기
+	for(int i = 0; i<N; i++){
+		scanf("%d %d", &score[i][0], &score[i][1]);
+		if (max_high < score[i][1] || (max_high == score[i][1] && max_loction < score[i][0])) {
+				max_high = score[i][1];//최댓값	
+				max_high_row = i;
+
+		}
+		if (max_loction < score[i][0]) {
+			max_loction = score[i][0];
+			location_arr[N - 1] = i; //거리 최댓값의 행
+			max_location_row = i;
+		}
+	}
+	int count = 0;
+	//정렬하자
+	for (int i = 0; i < N; i++) {
+		for (int j = N - 2; j >= 0 && i!= max_location_row ; j--) {
+			if (j+1 >= N-count	) {
+				if (score[location_arr[j]][0] < score[i][0]) {
+					for (int k = 1; k <= j; k++) {
+						location_arr[k - 1] = location_arr[k];
+					}
+					location_arr[j] = i;
+					count++;
+					break;
+				}
+			}
+			else {
+				location_arr[j] = i;
+				count++;
+				break;
+			}
+			
+		}
+	}
+
+	int low_high = score[location_arr[0]][1];//젤 낮은 거 높이
+	int low_location = score[location_arr[0]][0];
+	int sum_location = 0;
+	int i = 0;
+
+
+	//왼에서 가면서 
+	do{
+	//for (int i = 0; location_arr[i] != max_row; i++) {
+		if (low_high < score[location_arr[i]][1]) {
+			area += low_high * (score[location_arr[i]][0] - low_location);
+			low_location = score[location_arr[i]][0];
+			low_high = score[location_arr[i]][1];
+		}
+		else if (low_high == score[location_arr[i]][1]) {
+			sum_location += score[location_arr[i]][0] - low_location;
+			low_location = score[location_arr[i]][0];
+		}
+		
+	} while (location_arr[i++] != max_high_row);
+	area += score[max_high_row][1];
+	//10 추가되어야함
+	area += (sum_location)*score[location_arr[i - 1]][1];
+		//최댓값  location 보다 크면 중지
+			//ㅇ왼-> 오 가면서 높이 큰거 나오면
+				//H * (큰L - 지금 L)
+			//높이 같은게 나오면
+				//sum_L += 같L - 지금 L
+		//sum_L != 0이면
+			//area += (sum_L +1)*H
+	low_high = score[location_arr[N-1]][1];//젤 낮은 거 높이
+	low_location = score[location_arr[N - 1]][0];
+
+	i = N - 1;
+	count = 0;
+	for (i = N - 1; location_arr[i] != max_high_row; i--) {
+	//do{
+		if (low_high < score[location_arr[i]][1]) {
+			area += low_high * (low_location - score[location_arr[i]][0]);
+			low_high = score[location_arr[i]][1];
+			low_location = score[location_arr[i]][0];
+			count++;
+		}
+	}
+
+	if (count == 0) {
+		area += (max_loction- score[max_high_row][0]) * low_high;
+	}
+
+	printf("%d", area);
+	//오에서 가면서
+		//최댓값 location 보다 작으면 중지 
+			//오 -> 왼 가면서 큰거 나오면
+				//H * (큰L - 지금 L)
+				
+	return 0;
+}
