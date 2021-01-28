@@ -1,0 +1,73 @@
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h> 
+
+#define STACKSIZE 51
+
+typedef int element;
+
+element stack[STACKSIZE];
+int top = -1;
+
+
+void push(element item) {
+	stack[++top] = item;
+}
+
+int pop() {
+	return stack[top--];
+}
+
+int empty() {
+	if (top == -1)return 1;
+	else return 0;
+}
+int main() {
+	element item;
+	char S[STACKSIZE];
+	int sum = 0;
+	
+	fgets(S, STACKSIZE, stdin);
+	for (int i = 0; S[i] != '\n'; i++) {
+		if (S[i] != ')') {
+			push(S[i]-'0');
+		}
+		else {
+			//10이상이면 -10해서 sum에 넣기
+			//10이상이 아니면 count ++
+				//"("이 나올때 까지 
+			for (; (item = pop()) != -8;) {
+				if (item > 9) {
+					sum += item - 10;
+				}
+				else if(item >=0 ){
+					sum++;
+				}
+			}
+			item = pop();
+			sum *= item;
+			sum += 10;
+			push(sum);
+			sum = 0;
+			//sum + count 
+			//pop한 개수만큼 곱하기
+			//+10한 뒤 다시 push
+		}
+	}
+
+	while(!empty()) {
+		if ((item = pop()) > 9) {
+			sum += item - 10;
+		}
+		else {
+			sum++;
+		}
+	}
+	printf("%d", sum);
+
+
+
+	return 0;
+
+}
+
