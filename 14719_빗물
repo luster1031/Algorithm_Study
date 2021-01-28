@@ -1,0 +1,60 @@
+#include<stdio.h>
+int main() {
+	int H, W;//세로, 가로
+	int block[5001];
+	int max_high = 0;
+	int max_row = 0;
+	int area = 0;
+
+	scanf("%d%d",&H,&W);
+
+	for(int i = 0; i<W; i++){
+		scanf("%d", &block[i]);
+		if (max_high <= block[i]) {
+			max_high = block[i];//max 높이 행
+			max_row = i;
+		}
+	}
+
+	int low_high = block[0];
+	int i = 0;
+	int sum_high = block[0];
+	int count = 1;
+	//area = fun(i, max_row, low_high,block, area);
+	for (i = 1; i <= max_row; i++) {
+		//자기보다 낮은거
+		if (low_high > block[i]) {
+			sum_high += block[i];
+			count++;
+		}
+		else {
+			area += ((count * low_high) - sum_high);
+			low_high = block[i];
+			sum_high = block[i];
+			count = 1;
+		}
+	}
+
+
+
+	low_high = block[W - 1];
+	sum_high = block[W-1];
+	count = 1;
+	for (i = W-1; i >= max_row; i--) {
+		//자기보다 낮은거
+		if (low_high > block[i]) {
+			sum_high += block[i];
+			count++;
+		}
+		else {
+			area += ((count * low_high) - sum_high);
+			low_high = block[i];
+			sum_high = block[i];
+			count = 1;
+		}
+	}
+	
+	printf("%d", area);
+	return 0;
+}
+
