@@ -1,0 +1,38 @@
+#include <string>
+#include <vector>
+
+using namespace std;
+
+vector<int> solution(vector<int> progresses, vector<int> speeds) {
+	vector<int> answer(101);
+	vector<int> re(101);
+	int progress_count = 0;
+
+	for (progress_count = 0; progress_count < progresses.size(); progress_count++) {
+		re[progress_count] = 100 - progresses[progress_count];
+	}
+
+	for (int i = 0; i < speeds.size(); i++) {
+		int sum = 0;
+		sum = re[i] / speeds[i];
+		if (re[i] % speeds[i] > 0) {
+			re[i] = sum + 1;
+		}
+	}
+
+	int low = re[0];
+	int count = 1;
+	int out_count = 0;
+	for (int k = 0; k < progress_count; k++) {
+		if (low < re[k+1] || k+1 == progress_count) {
+			answer[out_count++] = count;
+			count = 1;
+			low = re[k+1];
+		}
+		else {
+			count++;
+		}
+	}
+	answer.resize(out_count);
+	return answer;
+}
