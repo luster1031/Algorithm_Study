@@ -1,0 +1,52 @@
+#include<stdio.h>
+
+int main() {
+	int N, R;
+	int volunteers[1001] = { 0 };
+	int input_volunteers;
+	int count = 0;
+	int number;
+
+	scanf("%d %d", &N, &R);
+	scanf("%d", &volunteers[R - 1]);
+
+
+	number = R-1;
+
+	while (number--) {
+		scanf("%d", &input_volunteers);
+		count = 0;
+		for (int i = 0; i <= R; i++) {
+			if (volunteers[i] != 0 || i == R) {
+				if (volunteers[i] > input_volunteers || volunteers[i] == 0) {
+					while(count){
+						volunteers[(i - 1) - count] = volunteers[i - count];
+						count--;
+					}
+					volunteers[i - 1] = input_volunteers;
+					break;
+				}
+				else {
+					count++;
+				}
+			}
+		}
+	}
+	
+	count = 0;
+	//정렬 다 되었으면
+	for (int i = 0, j = 1; j <= N;j++) {
+		if (volunteers[i] != j) {
+			printf("%d ",j);
+			count++;
+		}
+		else {
+			i++;
+		}
+	}
+
+	if (count == 0) {
+		printf("*");
+	}
+	return 0;
+}
