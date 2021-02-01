@@ -1,0 +1,123 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+void input_value(struct house *home, struct chicken *food,int N);
+void chicken_distance(struct house *home, struct chicken *food);
+void chicken_array(struct house *home, struct chicken *food);
+int min_chicken_sum(struct house *home, struct chicken *food, int M);
+
+typedef struct house {
+	int row = 0;//집의 가로 행
+	int col = 0;//집의 세로 행
+}house;
+
+typedef struct chicken{
+	int row = 0;//치킨 집 가로 행
+	int col = 0;//치킨 집 세로 행
+	int sum = 0;//치킨 거리 값
+}chicken;
+
+int house_count = 0;//집 배열 카운터
+int chicken_count = 0;//치킨 집 카운터;
+int main() {
+	house home[101];
+	chicken food[14];
+
+	int N, M;//N 세로 가로 수, M 최대 치킨집
+	scanf("%d %d", &N, &M);
+	//정보 입력 받기
+	input_value(home, food,N);
+
+	//치킨집과 집과의 거리 합 구하기
+	chicken_distance(home, food);
+
+	//치킨집 정렬 배열
+	chicken_array(home, food);
+
+	//M만큼 앞에 있는거
+	printf("%d",min_chicken_sum(home, food,M));
+
+
+
+	return 0;
+}
+
+//데이터 입력 받기
+void input_value(struct house *home, struct chicken *food,int N) {
+	 
+	int value;
+	
+	for (int i = 0; i < N; i++) {
+		for (int j = 0; j < N; j++) {
+			scanf("%d", &value);
+			if (value == 1) {//집이면
+				home[house_count].row = i;
+				home[house_count++].col = j;
+			}
+			else if(value == 2) {//치킨집이면 넣기 
+				food[chicken_count].row = i;
+				food[chicken_count++].col = j;
+			}
+		}
+	}
+}
+
+//치킨과 집의 거리 합 구하면서 거리 최소인 집 구하기. 
+void chicken_distance(struct house *home, struct chicken *food) {
+	int distance = 0;
+	int distance_sum = 0;
+
+	for (int i = 0; i < chicken_count; i++) {
+		for (int j = 0; j < house_count; j++) {
+			distance = abs(home[j].col - food[i].col) + abs(home[j].row - food[i].row);
+			distance_sum += distance;
+		}
+		food[i].sum = distance_sum;
+		distance_sum = 0;
+	}
+	//치킨집 하나당
+		//집 개수만큼 돌기
+			//distance = |치킨집 행 - 집 행| + |치킨 집 열 - 집 열|
+				//low_distance 최솟값 구하기
+}
+
+
+void chicken_array(struct house *home, struct chicken *food) {
+
+	chicken test;
+
+	for (int i = 1; i < chicken_count; i++) {
+		for (int j = 0; j < i; j++) {
+			if (food[j].sum > food[i].sum) {
+				test = food[i];
+				for (int k = i - 1; k >= j; k--) {	
+					food[k + 1] = food[k];
+				}
+				food[j] = test;
+			}
+		}
+	}
+}
+
+int min_chicken_sum(struct house *home, struct chicken *food,int M) {
+	//0에서 house_count까지 
+	//0에서 M까지
+		//M값과 똑같은 값 나오면 
+		//그기서 최솟값 
+	int min_distance = 102;
+	int distance = 0;
+	int sum_distance = 0;
+
+	
+	for (int i = 0; i < house_count; i++) {
+		for (int j = 0; food[j].sum <= food[M-1].sum && j < chicken_count; j++) {
+			distance = abs(home[i].col - food[j].col) + abs(home[i].row - food[j].row);
+			if (min_distance > distance) {
+				min_distance = distance;
+			}
+		}
+		sum_distance += min_distance;
+		min_distance = 102;
+	}
+	return sum_distance;
+}
