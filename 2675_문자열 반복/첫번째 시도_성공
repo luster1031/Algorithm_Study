@@ -1,0 +1,19 @@
+#include<stdio.h>
+
+int main() {
+	int T;
+	int R;
+	char input[1001];
+	scanf("%d", &T);
+	while (T--) {
+		scanf("%d", &R);
+		fgets(input, 1001, stdin);
+		for (int i = 0; input[i]!= '\n'; i++) {
+			for (int j = 0; j < R && input[i]!= ' '; j++) {
+				printf("%c", input[i]);
+			}
+		}
+		printf("\n");
+	}
+	return 0;
+}
