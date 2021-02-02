@@ -1,0 +1,93 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include <stdbool.h>
+
+typedef struct house {
+	int row;//집의 가로 행
+	int col;//집의 세로 행
+}house;
+
+typedef struct chicken {
+	int row;//치킨 집 가로 행
+	int col;//치킨 집 세로 행
+}chicken;
+
+int house_count = 0;//집 배열 카운터
+int chicken_count = 0;//치킨 집 카운터;
+bool check_chicken[14];
+int N, M;//N 세로 가로 수, M 최대 치킨집
+int distance_min = 999999999;
+
+//데이터 입력 받기
+void input_value(struct house *home, struct chicken *food, int N) {
+
+	int value;
+
+	for (int i = 0; i < N; i++) {
+		for (int j = 0; j < N; j++) {
+			scanf("%d", &value);
+			if (value == 1) {//집이면
+				home[house_count].row = i;
+				home[house_count++].col = j;
+			}
+			else if (value == 2) {//치킨집이면 넣기 
+				food[chicken_count].row = i;
+				food[chicken_count++].col = j;
+			}
+		}
+	}
+}
+
+void low_distance(int row, int count, struct house *home, struct chicken *food) {
+	int distance;
+	int min_distance = 999999999;
+	int sum_distance = 0;
+
+	if (row > chicken_count)return;
+	if (count == M) {
+		for (int i = 0; i < house_count; i++) {
+			for (int j = 0; j < chicken_count; j++) {
+				if (check_chicken[j]) {
+					distance = abs(home[i].col - food[j].col) + abs(home[i].row - food[j].row);
+					if (min_distance > distance) {
+						min_distance = distance;
+					}
+				}
+
+			}
+			sum_distance += min_distance;
+			min_distance = 102;
+		}
+		if (distance_min > sum_distance) {
+			distance_min = sum_distance;
+		}
+		return;
+	}
+	check_chicken[row] = true;
+	low_distance(row + 1, count + 1, home, food);
+
+	check_chicken[row] = false;
+	low_distance(row + 1, count, home, food);
+
+
+}
+
+int main() {
+	house home[101];
+	chicken food[14];
+
+	scanf("%d %d", &N, &M);
+	//정보 입력 받기
+	input_value(home, food,N);
+
+	//거리 작은거 구하기
+	low_distance(0,0,home,food);
+	printf("%d", distance_min);
+
+
+
+
+	return 0;
+}
+
+
