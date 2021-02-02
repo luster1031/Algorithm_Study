@@ -1,0 +1,96 @@
+#include<stdio.h>
+typedef struct roboot {
+	int row, col, d;
+}roboot;
+
+
+int test_row = 0, test_col = 0, test_direction = 0;
+int direction_change(int row, int col,int direction) {
+	switch (direction)
+	{
+	case 0:
+		row--; direction = 0;break;
+	case 1:
+		col++; direction = 1; break;
+	case 2:
+		row++; direction = 2; break;
+	case 3:
+		col--; direction = 3; break;
+	default:
+		break;
+	}
+	test_row = row;
+	test_col = col;
+	test_direction = direction;
+	// 방향이 0이면 row-- 북
+	// 방향이 1이면 col++ 동
+	// 방향이 2이면 row++ 남
+	// 방향이 3이면 col-- 서
+	return 0;
+}
+
+int main() {
+
+	roboot ro;
+	int N, M;
+	int place[51][51] = { 0 };
+	int count = 0;
+	int clean_count = 1;
+	//로봇청소기
+	scanf("%d %d", &N, &M);
+	scanf("%d %d %d", &ro.row, &ro.col, &ro.d);
+
+	//0받으면 3으로 넣자
+	for (int i = 0; i < N; i++) {
+		for (int j = 0; j < M; j++) {
+			scanf("%d", &place[i][j]);
+			if (place[i][j] == 0) {
+
+				place[i][j] = 3;
+			}
+		}
+	}
+	place[ro.row][ro.col] = 0;
+	 
+	while (1) {
+		//r과 c 칸을 청소했다고 체크 ,
+		
+
+		//2. 왼쪽 탐색
+		//(방향 + 3 % 4)에 있는 칸이 비어 있으면
+		direction_change(ro.row, ro.col, (ro.d+3)%4);
+
+		//비어 있으면
+		if (place[test_row][test_col] == 3) {
+			ro.d = test_direction;
+			ro.row = test_row;
+			ro.col = test_col;
+			place[ro.row][ro.col] = 0;
+			clean_count++;
+			count = 0;
+		}
+
+		//2-b. 1이거나, 0이면 공간이 없으면 
+		else if (place[test_row][test_col] == 1 || place[test_row][test_col] == 0) {
+			ro.d = test_direction;
+			count++;
+		}
+		
+
+		//4방향 모두 차여있으면 
+		if (count == 4) {
+			direction_change(ro.row, ro.col, (ro.d + 2) % 4);
+			if (place[test_row][test_col] == 1 ) {
+				printf("%d", clean_count);
+				return 0;
+			}
+			else {
+				ro.row = test_row;
+				ro.col = test_col;
+				count = 0;
+			}
+		}
+	}
+
+	return 0;
+}
