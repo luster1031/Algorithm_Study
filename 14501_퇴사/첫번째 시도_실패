@@ -1,0 +1,63 @@
+#include<stdio.h>
+typedef struct Schedule {
+	int T;
+	int P;
+}Schedule;
+
+int high_cost = 0;
+int input_N;
+int cost_row[1001] = { 0 };
+int cost_row_count = 0;
+int cost;
+bool check = false;
+
+int cal_cost(struct Schedule* cal,int i) {
+	//계산
+	//i = 0; i < 배열크기; i++
+
+		for (int j = i; (j + cal[j].T <= input_N) && j < input_N;) {
+			cost_row[cost_row_count++] = j;
+			cost += cal[j].P;
+			j += cal[j].T;
+			check = true;
+		}
+		if (high_cost < cost) {
+			high_cost = cost;
+		}
+		return 0;
+}
+
+int main() {
+	Schedule Counseling[16] = { 0 };
+	
+
+
+	//입력 받기
+	scanf("%d", &input_N);
+	for(int i = 0; i<input_N; i++){
+		scanf("%d %d", &Counseling[i].T, &Counseling[i].P);
+	}
+	
+	
+	for (int i = 0; i < input_N; i++) {
+		cost = 0;
+		cost_row_count = 0;
+		cal_cost(Counseling, i);
+		cost_row_count -= 1;
+		if (cost_row_count < 0)
+			cost_row_count = 0;
+		for (int j = cost_row[cost_row_count] + 1; j < input_N && cost_row_count > 0; j++) {
+			cost -= Counseling[cost_row[cost_row_count]].P;
+			cal_cost(Counseling, j);
+			if(check)
+				cost += Counseling[cost_row[--cost_row_count]].P;
+			//cost_row_count--;
+		}
+		
+	}
+	printf("%d", high_cost);
+
+
+	
+	return 0;
+}
