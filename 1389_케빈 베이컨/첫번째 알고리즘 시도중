@@ -1,0 +1,76 @@
+//최소사람을 구해라
+#include<stdio.h>
+int N, M;
+int row_count[101] = { 0 };
+int input_data[101][101] = { 0 };
+int direction = 0;
+int count = 0;
+int low_sum = 999999;
+
+void find_num(int row, int find_number) {
+	int count = 0;
+	//함수 
+	//받은 행에서 
+	for (int i = 0; i < N; i++) {
+		for (int j = 0; j < M && count <= row_count[j] ; j++) {
+			//0-M까지 && count <= 행[i]_count까지 
+			if (input_data[row][j] == 1) {
+				direction++;
+				if (j == find_number) {
+					direction++;
+					if (low_sum > direction) {
+						low_sum = direction;
+						direction--;
+					}
+				}
+				else {
+					count++;
+					find_num(j, find_number);
+				}
+			}
+				//[행][i] == 1이면서 i가 원하는 변수 나올때 까지
+				//count ++;
+				//함수 부르기 
+
+				//원하는 변수 나오면 
+					//거리 구하고 짧은거 
+		}
+	}
+}
+
+
+int main() {
+	int row,col;
+	int low_number = 101;//최소사람
+	int low_direction = 101;
+
+	scanf("%d %d", &N,&M);
+	for (int i = 0; i < M; i++) {
+		scanf("%d %d", &row, &col);
+		input_data[row-1][col-1] = 1;
+		row_count[row - 1] += 1;
+	}
+
+	//i = 0-N까지
+	for (int i = 0; i < N;i++) { //행 
+		count = 0;
+		direction = 0;
+		for (int j = 1; j <= N; j++) {	//찾는 거
+			if (j != i + 1) {
+				find_num(i, j);
+				if (low_direction < low_sum) {
+					low_direction = low_sum;
+					low_number = i;
+				}
+			}
+		}
+	}
+	
+	printf("%d", low_number);
+	
+	//1부터 자기 자신 아니고 N까지
+		//함수(행, 찾는 숫자)
+		//최솟값 sum에 넣기, 최소 사람 넣기
+
+}
+
