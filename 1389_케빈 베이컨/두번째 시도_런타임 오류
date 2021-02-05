@@ -1,0 +1,108 @@
+//최소사람을 구해라
+#include<stdio.h>
+#include<stdbool.h>
+#include<memory.h>
+#include<string.h>
+#define MAX 101
+
+int input_count[MAX] = { 0 };
+int input[MAX][MAX] = { 0 };
+int number_kind[MAX] = {0};
+int answer_count = 0;
+int row_count = 99999;
+int stack[MAX] = { 0 };
+int top = -1;
+
+
+ void find_number(int row, int number) {
+	bool check = false;
+	bool exist = true;
+
+	
+	for (int i = 0; i < input_count[row]; i++) {
+		exist = true;
+		for (int j = 0; j <= top; j++) {
+			if (stack[j] == input[row][i])
+				exist = false;
+		}
+		if (exist) {
+			if (input[row][i] != number) {//번호가 아니면
+				answer_count++;
+				check = true;
+				if (top < -1)
+					top = -1;
+				stack[++top] = input[row][i];
+				find_number(input[row][i] - 1, number);
+			}
+			else {//번호가 맞으면
+				if (row_count > answer_count) {
+					row_count = answer_count;
+				}
+				answer_count--;
+				top--;
+				break;
+			}
+		
+			if (check || (check == false && input_count[row] == 0)) {
+				answer_count--;
+			}
+		}
+	}
+}
+int main() {
+	int N, M;
+	int row, user;
+	int row_sum_count = 99999;
+	int number_sum_count = 0;
+	int answer_row = 0;
+	int count = 0;
+	memset(number_kind, -1, 101);
+
+	scanf("%d %d", &N, &M);
+
+	for (int i = 0; i < M; i++) {
+		scanf("%d %d", &row, &user);
+		input[row-1][input_count[row-1]] = user;
+		input[user - 1][input_count[user - 1]] = row;
+
+		//숫자 뭐가 있는지 출력
+		if (input_count[row - 1] == 0) {
+			number_kind[count++] = row;
+		}
+		if(input_count[user - 1] == 0) {
+			number_kind[count++] = user;
+		}
+		input_count[row-1] += 1;
+		input_count[user - 1] += 1;
+	}
+
+
+	for (int i = 0, row = number_kind[i] - 1; row != -1; i++) {
+		
+		for (int j=0, number = number_kind[j]; number != -1; j++) {
+			
+				if(number != row+1){
+					answer_count++;
+					if (top < -1)
+						top = -1;
+					stack[++top] = row+1;
+					find_number(row,number);
+					number_sum_count += row_count;//행 별 최소값
+					answer_count = 0;
+					row_count = 99999;
+					top = -1;
+				}
+				number = number_kind[j+1];
+		}
+		if (row_sum_count > number_sum_count) {
+			row_sum_count = number_sum_count;
+			answer_row = row;
+		}
+
+		answer_count = 0;//초기화
+		number_sum_count = 0;
+		row = number_kind[i+1] - 1;
+	}
+	printf("%d", answer_row+1);
+	return 0;
+}
