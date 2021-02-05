@@ -1,0 +1,66 @@
+//최소사람을 구해라
+#include<stdio.h>
+#include<stdbool.h>
+
+int input_count[101] = { 0 };
+int input[101][101] = { 0 };
+int answer_count = 0;
+int row_count = 99999;
+
+
+ void find_number(int row, int number) {
+	bool check = false;
+
+	for (int i = 0; i < input_count[row]; i++) {
+		answer_count++;
+		if (input[row][i] != number) {//번호가 아니면
+			check = true;
+			find_number(input[row][i]-1, number);
+		}
+		else {//번호가 맞으면
+			if (row_count > answer_count) {
+				row_count = answer_count;
+			}
+			break;
+		}
+	}
+	if (check || (check==false && input_count[row]== 0)) {
+		answer_count--;
+		check = false;
+	}
+}
+int main() {
+	int N, M;
+	int row, user;
+	int row_sum_count = 99999;
+	int number_sum_count = 99999;
+	int answer_row = 0;
+
+	scanf("%d %d", &N, &M);
+
+	for (int i = 0; i < M; i++) {
+		scanf("%d %d", &row, &user);
+		input[row-1][input_count[row-1]] = user;
+		input_count[row-1] += 1;
+	}
+
+	for (int row = 0; row < N; row++) {
+		for (int number = 1; number <= N; number++) {
+				if(number != row && input_count[]){
+					answer_count++;
+					find_number(row,number);
+					if (number_sum_count > answer_count && answer_count>0) {
+						number_sum_count = answer_count;//행 별 최소값
+					}
+				}
+
+		}
+		if (row_sum_count > number_sum_count) {
+			row_sum_count = number_sum_count;
+			answer_row = row;
+		}
+
+		answer_count = 0;//초기화
+	}
+	printf("%d", answer_row);
+}
