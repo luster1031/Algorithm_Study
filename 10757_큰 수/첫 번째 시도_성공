@@ -1,0 +1,54 @@
+#include<stdio.h>
+#include <string.h>
+#define MAX 10010
+
+int main() {
+	char input_one[MAX] = { 0 };
+	char input_two[MAX] = { 0 };
+	int answer[MAX] = { 0 };
+
+	int one_count = 0;
+	int two_count = 0;
+	int one_num = 0;
+	int two_num = 0;
+	int carry = 0;
+	int max_count = 0;
+
+	scanf("%s", input_one);
+	scanf("%s", input_two);
+
+	one_count = strlen(input_one);
+	two_count = strlen(input_two);
+
+	//큰거
+	if (one_count > two_count)
+		max_count = one_count;
+	else
+		max_count = two_count;
+
+	
+	for (int i = max_count+5; one_count >= 0 || two_count >=0;) {
+		one_num = input_one[--one_count] - '0';
+		two_num = input_two[--two_count] - '0';
+
+		if (one_count < 0) {
+			one_num = 0;
+		}
+		if(two_count < 0){
+			two_num = 0;
+		}
+
+		answer[i--] = (one_num + two_num +carry)% 10;
+		carry = (one_num + two_num + carry) / 10;
+	}
+
+	int answer_start_count = 0;
+	for (answer_start_count = 0; answer_start_count <= max_count+5 && answer[answer_start_count]== 0; answer_start_count++) {
+	}
+
+	for (; answer_start_count <= max_count + 5; answer_start_count++) {
+		printf("%d", answer[answer_start_count]);
+	}
+	return 0;
+}
+
