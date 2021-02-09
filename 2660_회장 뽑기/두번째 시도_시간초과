@@ -1,0 +1,148 @@
+//행안에서 숫자 찾는거 중에서 최소값의 큰 값을 구하고
+//큰 값에서 정렬
+#include<stdio.h>
+#include<stdbool.h>
+#define MAX 51
+int min_count = 9999;
+//int row_col_count;
+int input_count[MAX] = { 0 };//각 행에 대한 카운트 배열
+int input[MAX][MAX] = { 0 };
+int stack[MAX] = { 0 };
+int top = -1;
+int input_number = 0;
+typedef struct answer {
+	int score;
+	int row;
+}answer;
+
+answer output[MAX] = { 0 };
+void find_count(int row, int find_number) {
+	//함수(행, 값)
+	int find_cheak = true;
+	stack[++top] = row;
+	//row_col_count++;
+	for(int i = 0; i < input_count[row]; i++) {
+		if (input[row][i] == find_number) {
+			//각 행에 원하는 숫자가 있으면
+			//row_col_count++;
+			if (min_count > top+1) {
+				min_count = top+1;
+			}
+			//row_col_count--;
+			top--;
+			find_cheak = false;
+			return; 
+		}
+	}
+	bool check;
+	bool low_check = true;
+	if (find_cheak) {
+		//각 행에 원하는 숫자가 없으면	
+		//for(행에 들어있는 데이터 개수 만큼)
+		for (int i = 0; i < input_count[row]; i++) {
+			check = true;
+			for (int j = 0; j <= top; j++) {
+				if (stack[j] == input[row][i]) {
+					check = false;
+					break;
+					//top--;
+				}
+			}
+			if (check) {
+				low_check = false;
+				//row_col_count++;
+				find_count(input[row][i], find_number);
+				low_check = true;
+			}
+			
+		}
+
+	}
+	if (low_check)
+		top--;
+
+}
+
+void sort(int score, int number) {
+	
+
+		for (int j = input_number - 1; j >= 0; j--) {
+			if (output[j].score <= score && output[j].row < number) {
+				if (output[j].score == 0) {
+					output[j].score = score;
+					output[j].row = number;
+					return;
+				}
+				else {
+					for (int k = number - input_number + j; k > 0; k--) {
+						output[j - k] = output[j - k + 1];
+					}
+					output[j].score = score;
+					output[j].row = number;
+					return;
+				}
+			}
+		}
+
+}
+
+int main() {
+	int input_first, input_second;
+	int row_max_count = 0;
+	int answer_score = 9999;
+
+	//회원 수 받기 <= 50
+	scanf("%d", &input_number);
+
+	
+	while(scanf("%d %d", &input_first, &input_second)){
+
+		//-1이 나올 때 까지 입력받기
+		if (input_first == -1 || input_second == -1)
+			break;
+
+		//input[one][카운트 배열]
+		//input[two][카운트 배열]
+		input[input_first][input_count[input_first]] = input_second;
+		input[input_second][input_count[input_second]] = input_first;
+
+		//카운터배열[one]++;
+		//카운터배열[two]++;
+		input_count[input_first] += 1;
+		input_count[input_second] += 1;
+
+	}
+
+	//회원 수 만큼
+	for (int number = 1; number <= input_number; number++) {
+		//for(1 ~ 회원 수 까지)
+		for (int find_number = 1; find_number <= input_number; find_number++) {
+			if (find_number != number) {
+				
+				top = -1;
+				//row_col_count = 0; //행에서 각 숫자에 해당하는 변수 카운터
+				find_count(number, find_number);//행, 찾고자하는 넘버
+				//최대값 구하기,
+				if (row_max_count < min_count)
+					row_max_count = min_count;
+				min_count = 9999;
+			}
+		}
+		if (answer_score > row_max_count)
+			answer_score = row_max_count;
+
+		sort(row_max_count, number);
+		//answer[number - 1].score = answer_score;
+		//answer[number - 1].row = number - 1;
+
+		
+		row_max_count = 0;
+	}
+	int answer_count = 0;
+	for(; output[0].score== output[answer_count].score;answer_count++){}
+	printf("%d %d\n", output[0].score,answer_count);
+	for (int i = 0; i < answer_count; i++) {
+		printf("%d ", output[i].row);
+	}
+
+}
