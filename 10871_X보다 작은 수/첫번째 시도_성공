@@ -1,0 +1,19 @@
+#include <stdio.h>
+#define SIZE 10001
+int main() {
+	int N, X,x;
+	int i,j=0,temp;
+	int input[SIZE] = { '\0' };
+	scanf("%d %d", &N, &X);
+
+	for (i = 0; i < N; i++) {
+		scanf("%d", &x);
+		if (x < X)
+			input[j++] = x;
+	}
+	for (i = 0; i < j; i++) {
+		printf("%d ", input[i]);
+	}
+
+	return 0;
+}
