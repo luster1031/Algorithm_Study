@@ -1,0 +1,122 @@
+#include<stdio.h>
+#include<stdbool.h>
+int input[1002][1002];
+int input_count[1002];
+int stack[1002];
+int top = -1;
+int N, M, V;
+
+int sort_data(int frist,int second)
+{
+	int i =0;
+	for (; i < input_count[frist]; i++) {
+		if (second < input[frist][i]) {
+			for (int j = input_count[frist]; j > i; j--) {
+				input[frist][j] = input[frist][j - 1];
+			}
+			break;
+		}
+	}
+	input[frist][i] = second;
+	input_count[frist] += 1;
+	return 0;
+}
+
+int input_data() {
+	int frist, second;
+
+	scanf("%d %d %d", &N, &M, &V);
+	for(int i = 0; i< M; i++){
+		scanf("%d %d", &frist, &second);
+		sort_data(frist, second);
+		sort_data(second,frist);
+	}
+	return 0;
+}
+
+int DFS() {
+	int DFS_count = top;
+	int row = V;
+	bool duplicate = true;	//중복
+	int col_count[1001] = { 0 };
+
+	while (top < N-1 && col_count[row] <= N) {
+		duplicate = true;
+		for (int j = 0; j <= top; j++) {
+			if (stack[j] == input[row][col_count[row]]) {
+				duplicate = false;
+				break;
+			}
+		}
+		if (duplicate) {//스택에 없으면
+			stack[++top] = input[row][col_count[row]];
+			col_count[row] += 1;
+			row = stack[top];
+		}
+		else if (duplicate == false && col_count[row] + 1 == input_count[row]) {
+			if (top > 0) {
+				col_count[row] += 1;
+				row = stack[top - 1];
+			}
+		}else{
+			col_count[row] += 1;
+		}
+	}
+	for (int i = 0; i <= top && stack[i]!= 0; i++) {
+		printf("%d ", stack[i]);
+	}
+	return 0;
+}
+
+
+int BFS() {
+	int read_point = top;
+	int row = V;
+	bool check = true;
+	int i = 0;
+	int col_count[1001] = { 0 };
+
+
+	while (top < N - 1 && stack[read_point] != 0) {
+		read_point++;
+		for (int i = 0; i < input_count[row]; i++) {
+			for (int j = 0; j <= top; j++) {
+				if (stack[j] == input[row][i]) {
+					check = false;
+					break;
+				}
+			}
+			if (check) {
+				stack[++top] = input[row][i];
+				col_count[row] += 1;
+			}
+			check = true;
+		}
+		row = stack[read_point];
+	}
+
+	for (int i = 0; i <= top; i++) {
+		printf("%d ", stack[i]);
+	}
+
+	return 0;
+}
+
+int main() {
+	
+	
+	//넣기
+	input_data();
+
+	//DFS
+	stack[++top] = V;
+	DFS();
+
+	//BFS
+	printf("%\n");
+	top = -1;
+	stack[++top] = V;
+	BFS();
+
+	return 0;
+}
