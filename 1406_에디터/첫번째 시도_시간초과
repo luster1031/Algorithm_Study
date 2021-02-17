@@ -1,0 +1,52 @@
+#include<stdio.h>
+#include <string.h> 
+
+int main() {
+	int testcase;
+	char stack[100001];
+	int top = -1;
+	int point; 
+	char ch;
+	scanf("%s", stack);
+	//문자 받기
+	top = strlen(stack)-1;
+	point = top + 1;
+	scanf("%d", &testcase);
+	
+	while (testcase--) {
+		getchar();
+		scanf("%c", &ch);
+		if (ch == 'L') {
+			if (point != 0) {
+				point--;
+			}
+		}
+		else if (ch == 'D') {
+			if (point != top + 1) {
+				point++;
+			}
+		}
+		else if (ch == 'B') {
+			if (point != 0) {
+				for (int start = point; start <= top; start++) {
+					stack[start - 1] = stack[start];
+				}
+				point--;
+				top--;
+			}
+		}
+		else {
+			getchar();
+			scanf("%c", &ch);
+			for (int start = top; start >= point; start--) {
+				stack[start + 1] = stack[start];
+			}
+			stack[point] = ch;
+			point++;
+			top++;
+		}
+	}
+	for (int i = 0; i <= top; i++) {
+		printf("%c", stack[i]);
+	}
+}
