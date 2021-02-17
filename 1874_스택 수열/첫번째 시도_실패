@@ -1,0 +1,47 @@
+#include <stdio.h>
+#include<stdbool.h>
+int main() {
+	int remember_number = 1;
+	int testcase;
+	int top = -1;
+	int stack[100001];
+	bool check = true;
+	int number; 
+	char answer[100002];
+	int answer_count = 0;
+	bool answer_check = true;
+	
+
+	scanf("%d", &testcase);
+
+	for(int T = 0; T<testcase; T++){
+		scanf("%d", &number);
+		for (; remember_number <= number; remember_number++) {
+			stack[++top] = remember_number;
+			answer[answer_count++]= '+';
+		}
+
+			if (stack[top] == number) {
+				check = false;
+				--top;
+				answer[answer_count++] = '-';
+			}
+			else {
+				printf("NO");
+				answer_check = false;
+				break;
+			}
+			//스택에 없으면
+		if (check) {
+			stack[++top] = number;
+			answer[answer_count++] = '+';
+		}
+		check = true;
+	}
+	if (answer_check) {
+		for (int i = 0; i < answer_count; i++) {
+			printf("%c\n", answer[i]);
+		}
+	}
+	return 0;
+}
