@@ -1,0 +1,25 @@
+#include <stdio.h>
+#include <string.h>
+int main() {
+
+	int testcase;
+	char input[51];
+	int top = 0;
+	scanf("%d", &testcase);
+	while (testcase--) {
+		top = 0;
+		scanf("%s", &input);
+		for (int i = 0;top >= 0 && i<strlen(input); i++) {
+			if (input[i] == '(')
+				top++;
+			else if (input[i] == ')')
+				top--;
+		}
+		if (top == 0)
+			printf("YES\n");
+		else 
+			printf("NO\n");
+		
+	}
+	return 0;
+}
