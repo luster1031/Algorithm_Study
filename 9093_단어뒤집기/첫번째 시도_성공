@@ -1,0 +1,25 @@
+#include<stdio.h>
+
+int main() {
+	char input[1001];
+	int top = -1;
+	int testcase;
+
+	scanf("%d", &testcase);
+	getchar();
+	while (testcase--) {
+		fgets(input, 1001, stdin);
+		for (int i = 0; input[i-1]!='\n' ; i++) {
+			if (input[i] == ' ' || input[i] == '\n') {
+				for (int j = i-1; j > top; j--) {
+					printf("%c", input[j]);
+				}
+				top = i;
+				printf(" ");
+			}
+		}
+		printf("\n");
+		top = -1;
+	}
+	return 0;
+}
