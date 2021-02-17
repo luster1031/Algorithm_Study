@@ -1,0 +1,29 @@
+
+//문자 받기
+//point = top
+//testcase받기
+	//L이면
+		//if(top == 0)
+			//무시
+		//point--;
+	//P
+		//뒤에 문자 받기
+		//stack에 저장
+		//for(point ~ top까지 
+			//stack[point +1] = stack[point]
+		//point ++, top++
+
+	//B
+		//if(top == 0)
+			//무시
+		//for(point ~ top)
+			//stack[point -1] = stack[point]
+		//point--; top--;
+
+	//D
+		//if(top == point)
+			//무시
+		//else
+			//point++;
+
+	//스택 출력
