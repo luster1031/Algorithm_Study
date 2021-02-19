@@ -1,0 +1,149 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+#include <stdbool.h>
+typedef struct Node {
+	struct Node *next;
+	char data;
+}Node;
+
+typedef struct Node_h {
+	struct Node *next;
+}Node_h;
+
+Node_h *head;
+bool frist_check = false;
+
+int insert(char x, Node_h *point) {
+	Node *answer = (Node*)malloc(sizeof(struct Node));
+	answer->data = x;
+	answer->next = NULL;
+	if (frist_check == true) {
+		answer->next = point->next;
+		head->next = answer;
+	}
+	else if (point->next == NULL) {//첫번째 넣을 때,
+		head->next = answer;
+		frist_check = false;
+	}
+	//영어가 한개일 경우,
+	else if ((point->next)->next == NULL) {
+		(point->next)->next = answer;
+	}
+	else {
+		answer->next = (point->next)->next;
+		(point->next)->next = answer;
+	}
+	point->next = answer;
+
+	return 0;
+}
+int print() {
+	Node *print = (Node*)malloc(sizeof(struct Node));
+	print = head->next;
+	while (print!= NULL){
+		printf("%c", print->data);
+		print = print->next;
+	}
+	printf("\n\n");
+	return 0;
+}
+int delet(Node_h *point) {
+
+	Node *deldet_find = (Node*)malloc(sizeof(struct Node));
+	deldet_find = head->next;
+	while ((deldet_find->next != point->next) && deldet_find->next != NULL) {
+		deldet_find = deldet_find->next;
+	}
+
+	if ((point->next)->next == NULL) {//끝에꺼 삭제
+		
+		point->next = deldet_find;
+		deldet_find = (point->next)->next;
+		(point->next)->next = NULL;
+	}
+	else {//중간
+		
+		if (point->next == head->next) {
+			head->next = (point->next)->next;
+		}
+		point->next = deldet_find;
+		deldet_find = (point->next)->next;
+		if (deldet_find != NULL) {
+			(point->next)->next = deldet_find->next;
+		}
+		else {
+			(point->next)->next = NULL;
+			frist_check = true;
+		}
+
+	}
+	free(deldet_find);
+	return 0;
+}
+
+int move_point(Node_h *point) {
+	Node *move = (Node*)malloc(sizeof(struct Node));
+	move = head->next;
+	while (move->next != point->next) {
+		move = move->next;
+	}
+	point->next = move;
+	return 0;
+}
+int main() {
+	char stack[100001];
+	int count;
+	char ch;
+
+	Node_h *point = (Node_h*)malloc(sizeof(struct Node_h));
+	point->next = NULL;
+	
+	head = (Node_h*)malloc(sizeof(struct Node_h));
+	head->next = NULL;
+
+	//처음 삽입
+
+
+	scanf("%s", stack);
+	for (int i = 0; i < strlen(stack); i++) {
+		//삽입
+		insert(stack[i], point);
+	}
+	scanf("%d", &count);
+	while (count--) {
+		getchar();
+		scanf("%c", &ch);
+		if (ch == 'L') {
+			if (head->next != point->next) {
+				move_point(point);
+				frist_check = false;
+			}
+			else {
+				frist_check = true;
+			}
+			
+		}
+		else if (ch == 'D') {
+			if ((point->next)->next != NULL) {
+				point->next = (point->next)->next;
+				if(frist_check)
+					frist_check = false;
+			}
+		}
+		else if (ch == 'B') {
+			if(frist_check == false){
+				delet(point);
+				//커서 왼쪽에 있는 문자 삭제
+			}
+		}
+		else {
+			getchar();
+			scanf("%c", &ch);
+			//커서 왼쪽에 추가
+			insert(ch, point);
+		}
+	}
+	print();
+
+} 
