@@ -1,0 +1,46 @@
+#include<stdio.h>
+#include<stdbool.h>
+
+int main() {
+	bool open_par = false;
+	bool space = false;
+	char input;
+	char stack[100002] = { '\0' };
+	int top = -1;
+
+	do{
+		scanf("%c", &input);
+		if ((input == ' ' || input == '\n'|| input=='<') && open_par ==false) {
+			if(top > -1 && input != '<')
+				space = true;
+			for (; top > -1; top--) {
+				printf("%c", stack[top]);
+			}
+			
+		}
+		
+		else if (open_par) {
+			printf("%c", input);
+			if (input == '>') {
+				open_par = false;
+			}
+		}
+		else {
+			stack[++top] = input;
+		}
+		if (input == '<') {
+			printf("%c", input);
+			open_par = true;
+			space = false;
+		}
+		if (space == true) {
+			printf(" ");
+			space = false;
+		}
+
+
+	}while (input != '\n');
+
+
+	return 0;
+}
