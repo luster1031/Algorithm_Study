@@ -1,0 +1,37 @@
+#include<stdio.h>
+#include<stdbool.h>
+
+int main() {
+	bool add = false,add_y = false;
+	int x, y;
+	int sum_x= 0, sum_y = 0;
+	scanf("%d %d", &sum_x, &sum_y);
+	for (int i=0; i < 2; i++) {
+		scanf("%d %d", &x, &y);
+		if (x != sum_x) {
+			if (add)
+				sum_x -= x;
+			else
+				sum_x += x;
+			add = true;
+		}
+		else {
+			sum_x-=x;
+		}
+		if (y != sum_y) {
+			
+			if (add_y)
+				sum_y -= y;
+			else
+				sum_y += y;
+			add_y = true;
+		}
+		else {
+			sum_y -= y;
+		}
+		
+	}
+	printf("%d %d", sum_x, sum_y);
+
+	return 0;
+}
