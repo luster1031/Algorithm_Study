@@ -1,0 +1,31 @@
+#include<stdio.h>
+#include<stdbool.h>
+
+int main() {
+	bool input[5001] = { false };
+	int number, remove_num;
+	scanf("%d %d", &number, &remove_num);
+	int row = 0;
+	int answer[5001] = { 0 };
+	int answer_count = 0;
+	int find_row = 0;
+	int i = 1;
+	while (answer_count < number) {
+		for (find_row = 0; find_row < remove_num;) {
+			if (i > 7)
+				i = 1;
+			if (input[i++] != true)
+				find_row++;
+			
+
+		}
+		input[i-1] = true;
+		answer[answer_count++] = i-1;
+		
+	}
+	printf("<");
+	for (int i = 0; i < answer_count -1; i++)
+		printf("%d, ",answer[i]);
+	printf("%d>", answer[answer_count -1]);
+	return 0;
+}
