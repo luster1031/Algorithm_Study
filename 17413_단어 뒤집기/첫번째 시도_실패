@@ -1,0 +1,35 @@
+#include<stdio.h>
+#include <string.h>
+
+int main() {
+	char input[100001];
+	char answer[100001] = { '\0' };
+	int count = 0;
+	int location = -1;
+	
+	fgets(input, 100001, stdin);
+	for (int i = 0; input[i - 1] != '\n' && i<strlen(input)+1; i++) {
+		if (input[i] == ' ' || input[i] == '<' || input[i]=='\n') {
+			for (int start = i-1; start > location; start--) {
+				answer[count++] = input[start];
+			}
+			location = i; 
+			answer[count++] = input[i];
+		}
+		if (input[i] == '<') {
+			if (input[i - 1] == ' ' && i > -1){
+				count--;
+				answer[count - 1] = answer[count];
+			}
+				
+			do{
+				answer[count++] = input[++i];
+			} while (input[i] != '>');
+			if (input[i+1] == ' ')
+				i++;
+			location = i;
+		}
+	}
+	printf("%s", answer);
+	return 0;
+}
