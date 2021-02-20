@@ -1,0 +1,30 @@
+
+#include<stdio.h>
+#include <string.h>
+
+int main() {
+	char input[100002];
+	char stack[100002] = { '\0' };
+	int count = 0;
+	int top = -1;
+	
+	fgets(input, 100001, stdin);
+	for (int i = 0; i < strlen(input); i++) {
+		while(input[i] != ' ' && input[i] != '<' && input[i] != '\n') {
+			stack[++top] = input[i++];
+		}
+		while (top > -1) {
+			printf("%c", stack[top--]);
+		}
+		if (input[i] != '<' && i > 0)
+			printf(" ");
+		else if (input[i] == '<') {
+			do {
+				printf("%c", input[i]);
+			} while (input[i++] != '>');
+			if (input[i] != ' ')
+				i--;
+		}
+	}
+	return 0;
+}
