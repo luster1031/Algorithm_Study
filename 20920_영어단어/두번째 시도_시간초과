@@ -1,0 +1,86 @@
+
+#include <iostream>
+#include<string>
+#include <algorithm>
+using namespace std;
+int word_count = -1;
+
+typedef struct word {
+	string words;
+	int w_long;
+	int count = 0;
+};
+
+bool compare(const word& w1, const word& w2) {
+
+	if (w1.count < w2.count) {
+		return false;
+	}
+	else if (w1.count == w2.count) {
+		if (w1.w_long < w2.w_long) {
+			return false;
+		}
+		else if (w1.w_long == w2.w_long) {
+			if (w1.words.substr(0,1) < w2.words.substr(0,1)) {
+				return true;
+			}
+			else if (w1.words.substr(0,1) == w2.words.substr(0,1)) {
+				for (int i = 1; i <= w1.w_long; i++) {
+					if (w1.words.substr(i-1,i) != w2.words.substr(i - 1, i)) {
+						if (w1.words.substr(i - 1, i) <= w2.words.substr(i - 1, i))
+							return true;
+						else
+							return false;
+					}
+				}
+			}
+			else
+				false;
+		}
+		else
+			true;
+	}
+	else {
+		return true;
+	}
+
+}
+
+int main() {
+	cin.tie(NULL);
+	ios_base::sync_with_stdio(false);
+
+	word english_word[100001];
+	int word_number, word_long;
+	string word;
+
+	bool equal = false;
+	cin >> word_number >> word_long;
+		
+	for(int j = 0; j < word_number;j++) {
+		cin >> word;
+		if (word.length() >= word_long) {
+			for (int i = 0; i <= word_count; i++) {
+				if (!word.compare(english_word[i].words)) {//같으면
+					english_word[i].count+=1;
+					equal = true;
+					break;
+				}
+			}
+			if (!equal) {
+				english_word[++word_count].words = word;
+				english_word[word_count].count+= 1;
+				english_word[word_count].w_long = word.length();
+				
+			}
+			sort(english_word, english_word + word_count, compare);
+		}
+		equal = false;
+	}
+	for (int i = 0; i <= word_count; i++) {
+		cout << english_word[i].words <<"\n";
+	}
+	return 0;
+}
+
+
