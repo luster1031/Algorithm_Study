@@ -1,0 +1,35 @@
+//받기
+#include<stdio.h>
+
+int main() {
+	int input[1001] = { 0 };
+	int answer[1001] = { 0 };
+	int end = 0;
+	int testcase;
+	int row = 0;
+	int count = 1;
+	int input_number = 0;
+
+	scanf("%d", &testcase);
+	for (int i = 0; i < testcase; i++) {
+		scanf("%d", &input_number);
+		input[i] = input_number;
+	}
+	while (end != testcase) {
+		if (answer[row%testcase] == 0) {
+			input[row%testcase] -= 1;
+		}
+		if (input[row%testcase] == 0 && answer[row%testcase] == 0){
+			answer[row%testcase] = count;
+			end++;
+		}
+		else if(answer[row%testcase] != 0){
+			count--;
+		}
+		row++;
+		count++;
+	}
+	for (int i = 0; i < testcase; i++) {
+		printf("%d ", answer[i]);
+	}
+}
