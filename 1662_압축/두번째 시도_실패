@@ -1,0 +1,30 @@
+#include<stdio.h>
+#include <string.h>
+int main() {
+	char input[51];
+	int end = 0;
+	int row = 0;
+	int bracket_number = 0;
+	int text_point = -1;
+	int answer_number = 0;
+	typedef struct information {
+		int count = 0;
+		int front_number = 0;
+	};
+	information text[51];
+	//받기
+	fgets(input, 51, stdin);
+	for (; input[row]!= ')'; row++) {
+		if (input[row] == '(') {
+			text[++text_point].count = (row - end) - 1;
+			text[text_point].front_number = input[row - 1]-'0';
+			end = row + 1;
+		}
+	}
+	bracket_number = row - end;
+	for (; text_point >= 0; text_point--) {
+		bracket_number = (bracket_number * text[text_point].front_number) + text[text_point].count;
+	}
+	printf("%d", bracket_number);
+	
+}
