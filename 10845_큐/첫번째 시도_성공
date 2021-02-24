@@ -1,0 +1,54 @@
+#include<stdio.h>
+#include <string.h>
+
+int main() {
+	int testcase = 0;
+	char input[6];
+	int input_num;
+	int q[10001];
+	int front = -1;
+	int end = -1;
+	scanf("%d", &testcase);
+
+	while (testcase--) {
+		scanf("%s", input);
+
+		if (!strcmp(input, "push")) {
+			scanf("%d", &input_num);
+			front++;
+			q[front] = input_num;
+		}
+		else if (!strcmp(input, "pop")) {
+			if (front == end) {
+				printf("-1\n");
+			}
+			else {
+				printf("%d\n", q[++end]);
+			}
+		}
+		else if (!strcmp(input, "size")) {
+			printf("%d\n", front - end);
+		}
+		else if (!strcmp(input, "empty")) {
+			if (front == end)
+				printf("1\n");
+			else
+				printf("0\n");
+		}
+		else if (!strcmp(input, "front")) {
+			if (front == end)
+				printf("-1\n");
+			else
+				printf("%d\n", q[end + 1]);
+		}
+		else {
+			if (front == end)
+				printf("-1\n");
+			else
+				printf("%d\n", q[front]);
+		}
+		
+	}
+
+	return 0;
+}
