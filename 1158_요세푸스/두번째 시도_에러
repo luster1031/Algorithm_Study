@@ -1,0 +1,89 @@
+#include <stdio.h>
+#include<malloc.h>
+
+
+typedef struct input{
+	int data;
+	struct input *link;
+}input;
+
+
+typedef struct {
+	input *point, *delet_point;//처음 위치와, 나중 위치
+	input *rear, *front;
+}infomation;
+
+
+int add_num(infomation *data_information,int num,int k) {
+	input *data = (input*)malloc(sizeof(input));
+	data->data = num;
+	data->link = NULL;
+	if (data_information->front == NULL) {
+		data_information->rear = data;
+		data_information->front = data;
+	}
+	else {
+		data_information->rear->link = data;
+		data_information->rear = data;
+		
+	}
+	if (num == k) {
+		data_information->point = data;
+	}
+	if (((num%k) == (k - 1)) && data_information->delet_point == NULL) {
+		data_information->delet_point = data;
+	}
+
+	return 0;
+}
+
+int cal(infomation *data_information,int K) {
+	input *delet = data_information->point;
+	int sum = 0;
+
+	printf("<%d, ",delet->data);
+	data_information->point = delet->link;
+	data_information->delet_point->link = delet->link;
+	free(delet);
+	delet = data_information->point;
+	while (delet->data > 0) {
+		for (int i = 0; i < K-1 && (delet->link->data > 0);i++) {
+			if (i == (K - 2)) {
+				data_information->delet_point = delet;
+			}
+			delet = delet->link;
+			
+		}
+		printf("%d", delet->data);
+		if (delet->link != delet && delet->link->data > 0)
+			printf(", ");
+		else
+			printf(">");
+
+		data_information->point = delet->link;
+		data_information->delet_point->link = delet->link;
+		free(delet);
+		delet = data_information->point;
+	}
+	
+	return 0;
+}
+int main() {
+	int N, K;
+	infomation *data_information;
+	data_information = (infomation*)malloc(sizeof(infomation));
+	data_information->point = NULL;
+	data_information->delet_point = NULL;
+	data_information->front = NULL;
+
+
+	scanf("%d %d", &N, &K);
+	for (int i = 1; i <= N; i++) {
+		add_num(data_information, i, K);
+	}
+	data_information->rear->link = data_information->front;
+
+	cal(data_information, K); 
+
+	return 0;
+}
