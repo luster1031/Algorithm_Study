@@ -1,0 +1,14 @@
+#include<stdio.h>
+
+
+int main() {
+	int answer=1;
+	int input = 0;
+
+	scanf("%d", &input);
+	while(input > 0){
+		answer *= input--;
+	}
+	printf("%d", answer);
+	return 0;
+}
