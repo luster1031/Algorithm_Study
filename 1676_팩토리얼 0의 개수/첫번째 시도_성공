@@ -1,0 +1,12 @@
+#include<stdio.h>
+int main() {
+	int answer = 1;
+	int count = 0;
+	scanf("%d", &answer);
+	
+	count += answer / 5;
+	count += answer / 25;
+	count += answer / 125;
+	printf("%d", count);
+	return 0;
+}
