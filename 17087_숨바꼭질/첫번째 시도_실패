@@ -1,0 +1,24 @@
+#include<stdio.h>
+
+int main() {
+	int brother, location;
+	int input_location;
+	int cal_location;
+	int b_location=1000000000;
+	scanf("%d %d", &brother, &location);
+	while (brother--) {
+		scanf("%d", &input_location);
+		cal_location = input_location - location;
+
+		if (cal_location < 0)
+			cal_location *= -1;
+
+		if (b_location > cal_location)
+			b_location = cal_location;
+
+	}
+
+	printf("%d", b_location);
+
+	return 0;
+}
