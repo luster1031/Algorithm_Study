@@ -1,0 +1,71 @@
+#include<iostream>
+#include<vector>
+#include<algorithm>
+#include<math.h>
+
+using namespace std;
+
+int main() {
+	cin.tie(NULL);
+	ios_base::sync_with_stdio(false);
+
+	int brother_num,location,input_location;
+	int trivial_divisor;
+
+	vector<int>answer_input;
+	vector<int>test1_input;
+	vector<int>test2_input;
+	cin >> brother_num >> location;
+
+	cin >> input_location;
+	input_location -= location;
+	if (input_location < 0)
+		input_location *= -1;
+
+	for (int i = 1; i <= sqrt(input_location); i++) {
+		if (input_location % i == 0) {
+			answer_input.push_back(i);
+			answer_input.push_back(input_location / i);
+		}
+	}
+	sort(answer_input.begin(), answer_input.end());
+	
+	for (int j = 0; j < brother_num - 1; j++) {
+		cin >> input_location;
+		input_location -= location;
+		if (input_location < 0)
+			input_location *= -1;
+		
+
+		//test에 복사
+		test1_input.resize((int)(answer_input.size()));
+		copy(answer_input.begin(), answer_input.end(), test1_input.begin());
+		answer_input.clear();
+
+		for (int k = 1; k <= sqrt(input_location); k++) {
+			if (input_location % k == 0) {
+				test2_input.push_back(k);
+				if(k != input_location/k)
+					test2_input.push_back(input_location / k);
+			}
+		}
+		sort(test2_input.begin(), test2_input.end());
+
+		for (int p1=0, p2 = 0; p1 < test1_input.size() && p2 < test2_input.size();) {
+			if (test1_input[p1] < test2_input[p2]) {
+				p1++;
+			}
+			else if (test1_input[p1] > test2_input[p2]) {
+				p2++;
+			}
+			else {
+				answer_input.push_back(test1_input[p1++]);
+				p2++;
+			}
+		}
+	}
+
+	cout << answer_input.back();
+
+	return 0;
+}
