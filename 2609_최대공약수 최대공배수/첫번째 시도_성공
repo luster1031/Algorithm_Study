@@ -1,0 +1,18 @@
+#include <stdio.h>
+
+int main() {
+	int number1,number2;
+	int big_num = 0;
+	
+	scanf("%d %d", &number1,&number2);
+	for (int cal = 1; cal <= number1; cal++) {
+		if (number1 % cal == 0 && number2 % cal == 0) {
+			if(big_num < cal)
+				big_num = cal;
+		}
+	}
+	printf("%d\n", big_num);
+	big_num = ((number1 / big_num) * (number2 / big_num)) * big_num;
+	printf("%d", big_num);
+	return 0;
+}
