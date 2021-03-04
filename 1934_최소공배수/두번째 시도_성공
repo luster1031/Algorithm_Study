@@ -1,0 +1,39 @@
+#include <stdio.h>
+#include <math.h>
+int main() {
+	int number1,number2;
+	int big_num, small_num;
+	int testcase;
+	int mul = 1;
+	int mod = 1;
+	int sum; 
+	scanf("%d", &testcase);
+	while (testcase--) {
+		
+		scanf("%d %d", &number1, &number2);
+		if (number1 < number2) {
+			small_num = number1;
+			big_num = number2;
+		}
+		else {
+			small_num = number2;
+			big_num = number1;
+		}
+
+		while (1) {
+			if (big_num % small_num == 0) {
+				mul = small_num;
+				break;
+			}
+			else {
+				mod = big_num % small_num;
+				big_num = small_num;
+				small_num = mod;
+			}
+		}
+		mul = ((number1 / mul) * (number2 / mul)) * mul;
+		printf("%d\n", mul);
+	
+	}
+	return 0;
+}
