@@ -1,0 +1,49 @@
+#include <stdio.h>
+
+int main() {
+	int testcase;
+	char str[101];
+	double stack[101];
+	int value[27];
+	int top = -1;
+	int num;
+
+	scanf("%d", &testcase);
+	scanf("%s", str);
+
+	for (int i = 0; i < testcase; i++) {
+		scanf("%d", &num);
+		value[i] = num;
+	}
+
+	for(int i = 0; i< str[i]!='\0';i++) {
+		
+		if (str[i] >= 'A' && str[i] <= 'Z') {
+			stack[++top] = (double)value[str[i]-'A'];
+		}
+		else {
+			double a = stack[top];
+			double b = stack[--top];
+			switch (str[i]) {
+			case 42: {
+				stack[top] = a * b;
+				break;
+			}
+			case 43: {
+				stack[top] = a + b;
+				break;
+			}
+			case 45: {
+				stack[top] = b - a;
+				break;
+			}
+			case 47: {
+				stack[top] = (double)(b / a);
+				break;
+			}
+			}
+		}
+	}
+	printf("%.2f", stack[top]);
+	return 0;
+}
