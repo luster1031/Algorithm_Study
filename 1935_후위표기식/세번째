@@ -1,0 +1,51 @@
+include <stdio.h>
+
+int main() {
+	int testcase;
+	char str[101];
+	double stack[101];
+	int value[27];
+	int top = -1;
+	int num;
+
+	scanf("%d", &testcase);
+	scanf("%s", str);
+
+	for (int i = 0; i < testcase; i++) {
+		scanf("%d", &num);
+		value[i] = num;
+	}
+
+	for(int i = 0; i< str[i]!='\0';i++) {
+		
+		if (str[i] > 64 && str[i] < 91) {
+			stack[++top] = value[str[i]-65];
+		}
+		else {
+			switch (str[i]) {
+			case 42: {
+				stack[top - 1] *= stack[top];
+				top--;
+				break;
+			}
+			case 43: {
+				stack[top - 1] += stack[top];
+				top--;
+				break;
+			}
+			case 45: {
+				stack[top - 1] -= stack[top];
+				top--;
+				break;
+			}
+			case 47: {
+				stack[top - 1] /= stack[top];
+				top--;
+				break;
+			}
+			}
+		}
+	}
+	printf("%.2f", stack[top]);
+	return 0;
+}
