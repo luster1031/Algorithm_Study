@@ -1,0 +1,51 @@
+#include <iostream>
+#include <string>
+#include<stack>
+
+using namespace std;
+
+int main() {
+	int testcase;
+	string input;
+	double al[26];
+	stack<double>stack;
+	char number;
+	double num1;
+	double num2;
+
+	cin >> testcase >> input;
+	for (int i = 0; i < testcase; i++) {
+		cin >> al[i];
+	}
+	for(int i = 0; input[i]!= '\0'; i++) {
+		if (input[i] >= 'A' && input[i] <= 'Z') {
+			stack.push(al[input[i]-'A']);
+		}
+		else {
+			num1 = stack.top();
+			stack.pop();
+			num2 = stack.top();
+			stack.pop();
+			switch (input[i])
+			{
+			case '*':
+				stack.push(num1 * num2);
+				break;
+			case '/':
+				stack.push((double)(num2 / num1));
+				break;
+			case '-':
+				stack.push(num2 - num1);
+				break;
+			
+			default:
+				stack.push(num1 + num2);
+				break;
+			}
+		}
+	}
+	cout.precision(2);
+	cout << fixed << (double)stack.top();
+
+	return 0;
+}
