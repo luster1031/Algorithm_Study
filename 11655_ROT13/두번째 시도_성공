@@ -1,0 +1,22 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+int main() {
+	string input;
+	int num;
+
+	getline(cin, input);
+
+	for (int i = 0; i < input.length(); i++) {
+		num = input.at(i);
+		if (num >= 'A' && num <= 'z') {
+			num += 13;
+			if ((input.at(i) > 'M' && input.at(i) <= 'Z') || input.at(i) > 'm')
+				num -= 26;
+		}
+		input.at(i) = num;
+	}
+	cout << input;
+	return 0;
+}
