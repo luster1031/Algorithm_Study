@@ -1,0 +1,54 @@
+#include <stdio.h>
+int main() {
+	int testcase;
+	char input[14];
+	int frist_min = 0, frist_time = 24;
+	int second_min = 0, second_time = 24;
+	scanf("%d", &testcase);
+
+
+	while (testcase--) {
+		fgets(input, 14, stdin);
+
+
+		if (frist_time < ((input[0] - '0') * 10 + (input[1] - '0'))) {
+			frist_time = ((input[0] - '0') * 10 + (input[1] - '0'));
+		}
+
+		if (frist_min > ((input[4] - '0') * 10 + (input[5] - '0'))) {
+			frist_min = ((input[4] - '0') * 10 + (input[5] - '0'));
+		}
+
+		if (second_time < ((input[9] - '0') * 10 + (input[10] - '0'))) {
+			second_time = ((input[9] - '0') * 10 + (input[10] - '0'));
+		}
+
+		if (second_min > ((input[12] - '0') * 10 + (input[13] - '0'))) {
+			second_min = ((input[12] - '0') * 10 + (input[13] - '0'));
+		}
+	}
+
+	printf("%d %d %d %d", frist_min, frist_time, second_min, second_time);
+	if (frist_time > second_time && (frist_time == second_time) && (frist_min < second_min))
+		printf("-1");
+	else {
+		printf("%d:", frist_time);
+		if (frist_min == 0) {
+			printf("00 ~ ");
+		}
+		else
+			printf("%d ~ ", frist_min);
+		printf("%d:", second_time);
+		if (second_min == 0) {
+			printf("00 ~ ");
+		}
+		else
+			printf("%d", second_min);
+	}
+	return 0;
+}
+
+
+//대여 추천 기능
+//인원수, 도착할 수 있는 시간 -> 그 시간에 빌릴 수 있는 자가용 추천
+
