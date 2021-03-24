@@ -1,0 +1,64 @@
+//testcase
+//가격
+//12월 이용계흐기
+
+
+#include<iostream>
+
+using namespace std;
+int money[4];
+int month[13];
+
+int cla(int sum, int count, int min) {
+
+	if (count > 12) {
+		if (sum > money[3])
+			sum = money[3];
+		if (min > sum)
+			min = sum;
+		return min;
+	}
+	else {
+		if (month[count] != 0) {
+			if (money[1] > money[0] * month[count]) {
+				if (money[0] * month[count] > money[2]) {
+					sum += money[2];
+					count += 2;
+				}
+				else
+					sum += money[0] * month[count];
+			}
+
+			else
+				sum += money[1];
+		}                                                  
+		min = cla(sum, count + 1,min);
+		min =cla(sum+ money[2], count + 4,min);
+	}
+	return min;
+}
+int main() {
+	int testcase;
+
+	int money_sum = 0;
+	int month_count = 0;
+	int min = 4000;
+
+	cin >> testcase;
+	for (int t_case = 1; t_case <= testcase; t_case++) {
+		for (int input = 0; input < 4; input++) {
+			cin >> money[input];
+		}
+		for (int input = 1; input < 13; input++) {
+			cin >> month[input];
+		}
+		if (money[2] * 4 > money[3])
+			min = money[3];
+		else
+			min = money[2] * 4;
+		min=cla(money_sum, month_count,min);
+		printf("#%d %d\n",t_case, min);
+	}
+
+	return 0;
+}
