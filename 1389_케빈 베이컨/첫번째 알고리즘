@@ -1,0 +1,37 @@
+//bool배열
+//int row_min = 9999;
+
+//함수 (row, sum, find
+
+	//if(row == find
+		//if(row_min > sum
+			//row_min 
+		//return
+	
+	//ellse row가 아니여야함
+		//for(int col = 1; col< N; col++
+			//input배열이 1 && check배열이 false
+				//함수(col, sum+1,find 
+				
+
+
+//N M받기
+//for M
+	//받기
+	//숫자 세자
+
+//bool 배열 1 -> true
+//output_sum = 999999;
+//output_row = 0;
+
+//for(row = 1 - N
+	//output_sum = 0
+	//for (find = 1;i<N; i++)
+		//sum+=함수 (row , 0, find)
+	
+	//if(ouput_sum > sum
+		//ouput_sum =sum
+		//output_row = row
+	
+
+	//cout << sum
