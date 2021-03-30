@@ -1,0 +1,39 @@
+
+//bool check[502][502]부울 배열
+//input[502][502]찐 배열
+//최종 sum값
+
+//함수(int row, int col, int count, fun_sum)
+	//if count > 4
+		//최종 sum 값
+		//return 0
+
+	//최댓값 구하기
+	//max_num = 1001
+	//if [row][col+1] && col+1 <= M
+	//else row col-1 && col-1 >0
+	//else row-1 col && row -1 >0
+	//else row +1 col && row+1 <= N 
+	
+
+	//max_num = 1001
+	//if [row][col+1] && [row][col+1] == max_num
+		//함수
+	//if row col-1 &&  == max_num
+		//함수
+	//if row-1 col &&  == max_num
+		//함수
+	//if row +1 col && == max_num
+		//함수
+	
+
+
+//N, M받기
+//대입
+
+
+//젤 큰 값 구하면 안될 것 같다.
+//1.1부터 시작
+//함수(1,1,1,0)
+
+//출력
