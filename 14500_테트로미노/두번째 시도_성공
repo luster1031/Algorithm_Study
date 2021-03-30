@@ -1,0 +1,136 @@
+#include<iostream>
+
+using namespace std;
+
+bool check[502][502];//부울 배열
+int input[502][502];//찐 배열
+int output_sum = 0; //최종 sum값
+int N, M;//세로, 가로
+int other_shape = 0;
+
+int u_Shape(int row, int col) {
+	int max_sum = 0;
+	int min = 9999;
+	int count = 0;
+	//4방향의 합을 구해,
+	//작은거 빼,
+	
+	if (!check[row][col + 1] && col + 1 <= M){
+		max_sum += input[row][col + 1];
+		count++;
+		if (min > input[row][col + 1])
+			min = input[row][col + 1];
+	}
+	if (!check[row][col - 1] && col - 1 > 0) {
+		max_sum += input[row][col - 1];
+		count++;
+		if (min > input[row][col - 1])
+			min = input[row][col - 1];
+	}
+	if (!check[row - 1][col] && row - 1 > 0) {
+		max_sum += input[row - 1][col];
+		count++;
+		if (min > input[row - 1][col])
+			min = input[row - 1][col];
+	}
+	if (!check[row + 1][col] && row + 1 <= N){
+		max_sum += input[row + 1][col];
+		count++;
+		if (min > input[row + 1][col]) 
+			min = input[row + 1][col];
+			
+		}
+	if (count >= 3) {
+		max_sum += input[row][col];
+		if(count != 3)
+			max_sum -= min;
+	}
+	else
+		max_sum = 0;
+	return max_sum;
+}
+
+int cal_sum(int row, int col, int count, int fun_sum) {
+	if (count >= 4) {
+		if (fun_sum < other_shape)
+			fun_sum = other_shape;
+		if (output_sum < fun_sum) {
+			output_sum = fun_sum;
+		}
+		other_shape = 0;
+		return 0;
+	}
+	int other =  u_Shape(row, col);
+	if (other_shape < other)
+		other_shape = other;
+
+	//최댓값 구하기
+	int max_num = 0;
+	
+	if (!check[row][col + 1] && col + 1 <= M)
+		if (max_num < input[row][col + 1])
+			max_num = input[row][col + 1];
+	if (!check[row][col-1] && col-1 > 0)
+		if (max_num < input[row][col - 1])
+				max_num = input[row][col - 1];
+	if (!check[row-1][col] && row -1 >0)
+		if (max_num < input[row-1][col])
+			max_num = input[row-1][col];
+	if (!check[row +1][col] && row+1 <= N )
+		if (max_num < input[row+1][col])
+			max_num = input[row+1][col];
+
+	//다른 모양
+	
+
+	fun_sum += max_num;
+	if (!check[row][col + 1] && input[row][col + 1] == max_num && col + 1 <= M) {
+		check[row][col + 1] = true;
+		cal_sum(row, col + 1, count + 1, fun_sum);
+		check[row][col + 1] = false;
+	}
+	if (!check[row][col - 1] && input[row][col - 1] == max_num && col - 1 > 0) {
+		check[row][col - 1] = true;
+		cal_sum(row, col - 1, count + 1, fun_sum);
+		check[row][col - 1] = false;
+	}
+	if (!check[row - 1][col] && input[row - 1][col] == max_num && row - 1 > 0) {
+		check[row-1][col] = true;
+		cal_sum(row - 1, col, count + 1, fun_sum);
+		check[row - 1][col] = false;
+	}
+	if (!check[row + 1][col] && input[row + 1][col] == max_num && row + 1 <= N) {
+		check[row+1][col] = true;
+		cal_sum(row + 1, col, count + 1, fun_sum);
+		check[row + 1][col] = false;
+	}
+	if (count == 1) {
+		check[row][col] = false;
+		if (col == M) {
+			if (row + 1 <= N) {
+				check[row + 1][1] = true;
+				cal_sum(row + 1, 1, 1, input[row + 1][1]);
+				check[row + 1][1] = false;
+			}
+		}
+		else {
+			check[row][col + 1] = true;
+			cal_sum(row, col + 1, 1, input[row][col + 1]);
+			check[row][col+1] = false;
+		}
+	}
+	return 0;
+}
+int main() {
+
+	cin >> N >> M;
+
+	for (int i = 1; i <= N; i++) {
+		for (int j = 1; j <= M; j++) {
+			cin >> input[i][j];
+		}
+	}
+	check[1][1] = true;
+	cal_sum(1, 1, 1, input[1][1]);
+	cout << output_sum;
+}
