@@ -1,0 +1,71 @@
+#include<iostream>
+
+using namespace std;
+
+int N, M;
+int input[102][102];
+bool check[102];
+int min_count = 9999;
+
+//함수 (row, sum, find
+
+	//if(row == find
+		//if(row_min > sum
+			//row_min 
+		//return row_min
+	
+	//ellse row가 아니여야함
+		//for(int col = 1; col< N; col++
+			//input배열이 1 && check배열이 false
+				//함수(col, sum+1,find 
+				
+int cal_min_count(int row, int find_num, int count) {
+	if (row == find_num) {
+		if (min_count > count) {
+			min_count = count;
+			return 0;
+		}
+	}
+	else {
+		for (int col = 1; col <= N; col++) {
+			if (input[row][col] && !check[col]) {
+				check[col] = true;
+				cal_min_count(col, find_num, count + 1);
+				check[col] = false;
+			}
+		}
+	}
+	return 0;
+}
+int main() {
+
+	cin >> N >> M;
+	int row_of_min = 99999;
+	int output_min_row = 0;
+	int sum = 0;
+	for (int i = 0,a,b; i < M; i++) {
+		cin >> a >> b;
+		input[a][b] = 1;
+		input[b][a] = 1;
+	}
+
+	
+	for (int row = 1; row <= N; row++) {
+		sum = 0;
+		for (int find_num = 1; find_num <= N; find_num++) {
+			if (row != find_num) {
+				min_count = 9999;
+				check[row] = true;
+				cal_min_count(row, find_num, 0);
+				sum += min_count;
+				check[row] = false;
+			}
+		}
+		if (row_of_min > sum) {
+			row_of_min = sum;
+			output_min_row = row;
+		}
+	}
+	cout << output_min_row;
+	return 0;
+}
