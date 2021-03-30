@@ -1,0 +1,83 @@
+#include <iostream>
+
+using namespace std;
+int N, K;
+
+
+typedef struct Node {
+	int number;
+	Node *point;
+}Node;
+
+typedef struct Point_Node {
+	Node *front,*rear,*delet_point;
+}Point_Node;
+//공백
+Point_Node *empty() {
+	Point_Node *head = (Point_Node *)malloc(sizeof(Point_Node));
+	head->front = NULL;
+	head->rear = NULL;
+	head->delet_point = NULL;
+	return head;
+}
+
+//삽입
+void input_Node(int number, Point_Node *head,int find_number) {
+	Node *creat_Node = (Node*)malloc(sizeof(Node));
+	creat_Node->number = number;
+	if (head->front == NULL) {
+		head->front = creat_Node;
+		head->rear = creat_Node;
+	}
+	else {
+		head->rear->point = creat_Node;
+		head->rear = creat_Node;
+	}
+
+	if (number == find_number) {
+		head->delet_point = creat_Node;
+	}
+}
+
+int delet_Node(Point_Node *head, int count) {
+	Node *delet = (Node*)malloc(sizeof(Node));
+	delet = head->delet_point;
+	head->delet_point = head->delet_point->point;
+	
+	while (head->front->point != delet) {
+		head->front = head->front->point;
+	}
+	head->front->point = delet->point;
+	cout << delet->number;
+	free(delet);
+	
+	for (int i = 1; i < K && count != N; i++) {
+		head->delet_point = head->delet_point->point;
+	}
+	return 0;
+} 
+
+void search_Node() {
+
+}
+int main() {
+	int count = 0;
+
+	//공백
+	Point_Node *input = empty();
+	cin >> N >> K;
+	cout << "<";
+	for (int i = 1; i <= N; i++)
+		input_Node(i, input,K);
+	input->rear->point = input->front;
+
+	while (count++ < N) {
+		delet_Node(input, count);
+		if(count != N)
+			cout << ", ";
+	}
+	cout << ">";
+
+}
+
+
