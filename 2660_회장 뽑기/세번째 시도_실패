@@ -1,0 +1,77 @@
+#include<iostream>
+#include<algorithm>
+
+using namespace std;
+
+
+bool check[60];
+int Number_of_members;
+int member[60][60];
+int min_row = 9999;
+
+int friend_count[52] = {0};
+int check_hop(int row, int row_count, int hop) {
+	if (row_count >= Number_of_members){
+		if (min_row > hop)
+			min_row = hop;
+		return 0;
+	}
+	int add_count = 0;
+	for (int col = 1; add_count < friend_count[row] && col <= Number_of_members; col++) {
+		if (member[row][col] && row != col && !check[col]) {
+			add_count++;
+		}
+	}
+	for (int col = 1,f_count = 0; f_count < friend_count[row]&& col <= Number_of_members; col++) {
+		if (member[row][col] && row != col && !check[col]) {
+			check[col] = true;
+			check_hop(col, row_count+ add_count, hop + 1);
+			check[col] = false;
+			f_count++;
+		}
+	}
+	
+	return 0;
+
+}
+int main() {
+	int Candidate_count = 0;
+	int output_min_hop = 9999;
+	int Candidate_hop[60];
+	cin >> Number_of_members;
+	while (1) {
+		int a, b;
+		cin >> a >> b;
+		if (a == -1 || b == -1)
+			break;
+		member[a][b] = 1;
+		member[b][a] = 1;
+		friend_count[a] += 1;
+		friend_count[b] += 1;
+		
+	}
+
+	for (int row = 1; row <= Number_of_members; row++) {
+		check[row] = true;
+		check_hop(row, 0, 0);
+		check[row] = false;
+		if (output_min_hop > min_row) {
+			output_min_hop = min_row;
+			Candidate_count = 1;
+		}
+		else if (output_min_hop == min_row) {
+			Candidate_count++;
+		}
+		Candidate_hop[row] = min_row;
+		min_row = 9999;
+		
+	}
+	cout << output_min_hop << " " << Candidate_count << "\n";
+	for (int i = 1,cou = 0; cou < Candidate_count; i++) {
+		if (Candidate_hop[i] == output_min_hop) {
+			cou++;
+			cout << i << " ";
+		}
+	}
+	return 0;
+}
