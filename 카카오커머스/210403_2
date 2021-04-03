@@ -1,0 +1,42 @@
+
+import java.util.*;
+class Solution {
+    public int solution(int[][] needs, int r) {
+        int answer = needs.length;
+        int[][] count_need = new int[needs.length][2];
+        boolean [] check = new boolean[needs.length];
+        //각 열의 개수
+        for(int row = 0; row<needs.length; row++){
+            for(int col = 0; col < needs[row].length; col++){
+                if(needs[row][col] == 1){
+                	count_need[col][1] += 1;
+                	
+                }
+            }
+            count_need[row][0] = row;
+            System.out.println(count_need[row][1]);
+        }
+        //정렬 - 내림차순
+        Arrays.sort(count_need, Comparator.comparingInt(o -> o[1]));
+        //r만큼 true로 만들기
+        for(int i = count_need.length-1; i>=count_need.length-r; i--) {
+        	check[count_need[i][0]] = true;
+        }
+        //각 열 비교 
+        for(int row = 0; row<needs.length; row++){
+            for(int col = 0; col < needs[row].length; col++){
+            	if(needs[row][col] == 1 && !check[col]) {
+            		answer--;
+            		break;
+            	}
+            }
+            
+        }
+            //true가 아니면 count++ break;
+            
+        //answer = needs.length +1 - 카운트한거
+        return answer;
+    }
+}
+
+
