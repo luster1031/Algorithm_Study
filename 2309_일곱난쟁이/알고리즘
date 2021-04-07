@@ -1,0 +1,28 @@
+#include<iostream>
+
+using namespace std;
+bool output_check;
+
+void check() {
+	//count : 7이 되면
+		//sum 확인, sum 이 100이 되면
+		//출ㄹ력
+			//끝내기
+			
+	//아니면
+		//함수진입(
+}
+int main() {
+	int input[9];
+	bool input_check[9];
+	for (int i = 0; i < 9; i++) {
+		cin >> input[i];
+	}
+	
+	for (int i = 0; i < 9; i++) {
+		//출발 0~ 8
+		//함수(count, sum)
+	}
+	
+
+}
