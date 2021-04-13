@@ -1,0 +1,28 @@
+#include<iostream>
+
+using namespace std;
+int out_count;
+int cal(int want_num,int num) {
+	if (num == want_num) {
+		out_count++;
+		return out_count;
+	}
+	else if(num < want_num){
+		cal(want_num, num + 1);
+		cal(want_num, num + 2);
+		cal(want_num, num + 3);
+	}
+	return out_count;
+}
+int main() {
+	int testcase;
+	int num;
+	cin >> testcase;
+
+	while (testcase--) {
+		out_count = 0;
+		cin >> num;
+		cout << cal(num, 0) << '\n';
+	}
+	return 0;
+}
