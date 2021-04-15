@@ -1,0 +1,40 @@
+#include<iostream>
+#include<set>
+
+using namespace std;
+
+
+int main() {
+	set<int> one;
+	set<int> two;
+	int testcase,num;
+	cin >> testcase;
+	while (testcase--) {
+		cin >> num;
+		one.insert(num);
+	}
+
+	cin >> testcase;
+	while (testcase--) {
+		cin >> num;
+		two.insert(num);
+	}
+	
+	set<int>::iterator one_count = one.begin();
+	for (set<int>::iterator two_count = two.begin(); two_count != two.end();) {
+		if (*two_count == *one_count) {
+			cout <<"1\n";
+			two_count++;
+			one_count++;
+		}
+		else if(*two_count > *one_count){
+			one_count++;
+		}
+		else {
+			cout << "0\n";
+			two_count++;
+		}
+	}
+
+	return 0;
+}
