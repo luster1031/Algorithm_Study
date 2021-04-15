@@ -1,0 +1,47 @@
+#include<iostream>
+#include<set>
+#include<map>
+using namespace std;
+
+
+int main() {
+	set<int> one;
+	map<int,int> two;
+	int input[100002];
+	int testcase,num;
+	cin >> testcase;
+	while (testcase--) {
+		cin >> num;
+		one.insert(num);
+	}
+
+	cin >> testcase;
+	for(int i = 0; i<testcase; i++) {
+		cin >> num;
+		two.insert(pair<int, int>(num, 0));
+		input[i] = num;
+	}
+	
+	set<int>::iterator one_count = one.begin();
+	for (map<int,int>::iterator two_count = two.begin(); two_count != two.end() && one_count != one.end();) {
+		if (two_count->first == *one_count) {
+			two_count->second = 1;
+			two_count++;
+			one_count++;
+		}
+		else if(two_count->first > *one_count){
+			one_count++;
+		}
+		else if (one_count == one.end() || two_count->first > *one_count) {
+			two_count++;
+		}
+	}
+	map<int,int>::iterator find_num;
+	for (int i = 0; i < two.size(); i++) {
+		find_num = two.find(input[i]);
+		cout << find_num->second <<'\n';
+	}
+
+
+	return 0;
+}
