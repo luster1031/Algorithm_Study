@@ -1,0 +1,31 @@
+#include<iostream>
+#include<vector>
+
+using namespace std;
+
+
+int main() {
+	vector<int>input;
+	int testcase;
+	int won,input_num;
+	int count = -1,output_count = 0;
+	cin >> testcase >> won;
+	
+	while (testcase--) {
+		cin >> input_num;
+		if (won > input_num) {
+			input.push_back(input_num);
+			++count;
+		}
+	}
+
+	for (int i = count; i >= 0 && won != 0; i--) {
+		while (won >= input[i]) {
+			won -= input[i];
+			output_count++;
+		}
+	}
+	
+	cout << output_count;
+	return 0;
+}
