@@ -1,0 +1,73 @@
+#include<iostream>
+#include<vector>
+
+using namespace std;
+int N;//마을 수
+int max_member = 0;
+vector<int> village_of_member;//각 마을의 주민 수
+int member[10001][10001]; //마을의 연결 확인
+bool member_check[10001]; //마을 
+int village_count[10001] = { 0 };
+int add_mumber = 0;
+int count_number;
+int cal_member(int befor_row, int row) {
+
+	if (count_number == N) {
+		if (max_member < add_mumber) {
+			max_member = add_mumber;
+		}
+		return 0;
+	}
+	else {
+		for (int i = 1,k =0; i <= N && k < village_count[row]; i++) {
+			if (!member_check[befor_row]) {
+				for (int j = 1; j <= N; j++) {
+					if (!member_check[j] && member[row][j] && j != befor_row) {
+						k++;
+						member_check[row] = true;
+						count_number++;
+						cal_member(row, j);
+						member_check[row] = false;
+						if (count_number >= N)return 0;
+					}
+				}
+			}
+			else {
+				if (!member_check[i] && member[row][i]) {
+					k++;
+					count_number++;
+					add_mumber += village_of_member[i - 1];
+					cal_member(row, i);
+					if (count_number >= N)return 0;
+				}
+			}
+		}
+	}
+	return 0;
+}
+
+int main() {
+	cin >> N;
+	for (int i = 0,num; i < N; i++) {
+		cin >> num;
+		village_of_member.push_back(num);
+	}
+
+	for (int i = 0,one, two; i < N-1; i++) {
+		cin >> one >>two;
+		member[one][two] = 1;
+		member[two][one] = 1;
+		village_count[one]++;
+		village_count[two]++;
+	}
+	
+	for (int row = 1; row <= N; row++) {
+		add_mumber = village_of_member[row-1];
+		count_number = 0;
+		cal_member(0, row);
+	}
+	
+	cout << max_member;
+
+	return 0;
+}
