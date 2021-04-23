@@ -1,0 +1,24 @@
+#include <iostream>
+#include <vector>
+using namespace std;
+
+int main() {
+	vector<char> output;
+	long long input, num,mod;
+	cin >> input >> num;
+
+
+	while (input != 0) {
+		mod = input % num;
+		input /= num;
+		if(mod >= 10)
+			output.push_back(mod+55);
+		else output.push_back(mod+'0');
+	}
+
+	for (vector<char>::reverse_iterator inter = output.rbegin(); inter != output.rend(); inter++) {
+		cout << *inter;
+	}
+
+	return 0;
+}
