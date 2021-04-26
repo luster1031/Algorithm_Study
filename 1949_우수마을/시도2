@@ -1,0 +1,77 @@
+
+
+#include<iostream>
+#include <vector>
+
+using namespace std;
+
+int N;
+vector <int> input;
+int check[10002][10002] = { 0 };
+int numbers[10002] = { 0 };
+int sum_member = 0, max_member = 0;
+int count_row;
+int Excellent_check[10002]= {0};
+bool pass[10002];
+
+int cal_member(int row) {
+	if (count_row >= N) {
+		if (max_member < sum_member)
+			max_member = sum_member;
+		return 0;
+	}
+	else {
+		for (int i = 1,j = 0; j < numbers[row]; i++) {
+			if (check[row][i]){
+				if(i != row && Excellent_check[i] == 0) {
+					if (Excellent_check[row] == 2)
+						Excellent_check[i] = 1;
+					else {
+						Excellent_check[i] = 2;
+						sum_member += input[i - 1];
+					}
+				count_row++;
+				}
+				j++;
+			}
+		}
+
+		for (int i = 1, j = 0; j < numbers[row] && i <= N; i++) {
+			if (check[row][i] && i != row && !pass[i]) {
+				pass[i] = true;
+				cal_member(i);
+				j++;
+			}
+		}
+	}
+}
+
+int main() {
+
+	cin >> N;
+	for (int i = 0, num; i < N; i++) {
+		cin >> num;
+		input.push_back(num);
+	}
+
+	for (int i = 1, one, two; i < N; i++) {
+		cin >> one >> two;
+		check[one][two] = 1;
+		check[two][one] = 1;
+		numbers[one] += 1;
+		numbers[two] += 1;
+	}
+
+	for (int row = 1; row <= N; row++) {
+		count_row = 1;
+		sum_member = input[row - 1];
+		Excellent_check[row] = 2;
+		pass[row] = true;
+		cal_member(row);
+		memset(pass, false, N+1);
+		memset(Excellent_check, 0, sizeof(int)*(N+1));
+		//배열 초기화
+	}
+	cout << max_member;
+	return 0;
+}
