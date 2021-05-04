@@ -1,0 +1,64 @@
+#include <iostream>
+#include <string>
+#include <stack>
+using namespace std;
+
+int main() {
+	string input;
+	stack<char> left;
+	stack<char> right;
+	
+	cin >> input;
+	for (int i = 0; i<input.size(); i++) {
+		left.push(input[i]);
+	}
+
+	int count;
+	char edit;
+	cin >> count;
+
+	while (count--) {
+		cin >> edit;
+		switch (edit)
+		{
+		case 'P': {
+			cin >> edit;
+			left.push(edit);
+			break;
+		}
+		case 'L': {
+			if (left.empty()) break;
+			else {
+				right.push(left.top());
+				left.pop();
+				break;
+			}
+		}
+		case 'B': {
+			if (left.empty())break;
+			else left.pop();
+			break;
+		}
+		case 'D': {
+			if (right.empty())break;
+			left.push(right.top());
+			right.pop();
+			break;
+		}
+		default:
+			break;
+		}
+	}
+	for (int i = 0; !left.empty(); i++) {
+		right.push(left.top());
+		left.pop();
+	}
+
+	for (int i = 0; !right.empty(); i++) {
+		cout << right.top();
+		right.pop();
+	}
+
+
+	return 0;
+}
