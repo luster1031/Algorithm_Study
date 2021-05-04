@@ -1,0 +1,7 @@
+//처음 주어진 문장 -> left stack에 저장
+
+L : left stack에 있는 top을 right stack에 저장
+D : right stack에 있는 top을 left stack에 저장
+B : left stack의 top 삭제
+P : 문자 받아서
+    left stack top에 저장
