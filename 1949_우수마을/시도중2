@@ -1,0 +1,57 @@
+//우수마을
+#include <iostream>
+
+using namespace std;
+int Residents[10001];
+int Neighbor[10001][10001] = { 0 };
+int max_number = 0;
+bool check[1001];//다녀간거 체크
+int N;
+
+int cal_number(int row, int count,bool row_check, int number) {
+	
+	if (count == N-1)return number;
+	for (int i = 1; i <= N; i++) {
+
+		if (Neighbor[row][i] && !check[i]) {
+			check[i] = true;
+			if (!row_check) {
+				cout << "false " << i << '\n';
+				number += max(cal_number(i, count + 1,false,0), cal_number(i, count + 1, true,Residents[i]));
+			}
+			else {
+				cout << "true " << i << '\n';
+				number +=  cal_number(i, count + 1, false,0);
+			}
+		}
+	}
+	return number;
+}
+int main() {
+	
+	cin >> N;
+
+	for(int i = 1,num; i<=N; i++){
+		cin >> num;
+		Residents[i] = num;
+	}
+	
+	for (int i = 1,one, two; i < N; i++) {
+		cin >> one >> two;
+		Neighbor[one][two] = 1;
+		Neighbor[two][one] = 1;
+	}
+
+	check[1] = true; 
+	int max1 = cal_number(1, 0, true, Residents[1]);
+	fill_n(check, N, false);
+	cout << max1;
+
+
+	cout << '\n';
+	check[1] = true;
+	int max2 = cal_number(1, 0, false, 0);
+	cout << max2 <<'\n';
+	cout << max(max1, max2);
+	return 0;
+}
