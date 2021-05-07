@@ -1,0 +1,63 @@
+#include <iostream>
+#include <map>
+#include<string.h>
+
+using namespace std;
+
+int main() {
+	int N = 0;
+	cin >> N;
+	int Synergy[200001] = { 0 };
+	int output_sum = 0;
+	
+
+	int** check = new int*[N+1];
+	int* use_ch = new int[N + 1];
+
+	for (int i = 0; i <= N; i++)
+		check[i] = new int[N+1];
+	for (int i = 0; i <= N; i++) {
+		memset(check[i], 0, sizeof(int) * (N + 1)); //뭐지
+		memset(use_ch, 0, (N +1)*sizeof(int));
+	}
+
+
+	multimap<int, int> input;
+	
+	for (int i = 2,num; i <= N; i++) {
+		cin >> num;
+		check[i][num] = 1;
+		check[num][i] = 1;
+	}
+
+	for (int i = 1,num; i <= N; i++) {
+		cin >> num;
+		input.insert(pair<int, int>(num,i));
+		Synergy[i] = num;
+	}
+
+	int max_row = 0;
+	for (multimap<int, int>::reverse_iterator iter = input.rbegin(); iter != input.rend(); iter++) {
+		max_row = 0;
+		if (!use_ch[iter->second]) {
+			for (int i = 1, max = 0; i <= N; i++) {
+				if (check[iter->second][i] && i != iter->second) {
+					if (max < Synergy[i]) {
+						max = Synergy[i];
+						max_row = i;
+					}
+				}
+			}
+		
+			if (!use_ch[max_row]) {
+				use_ch[max_row] = 1;
+				use_ch[iter->second] = 1;
+				output_sum += (iter->first * Synergy[max_row]);
+			}
+		}
+	}
+
+
+	cout << output_sum;
+	return 0;
+}
