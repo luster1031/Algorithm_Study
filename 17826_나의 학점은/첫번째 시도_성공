@@ -1,0 +1,22 @@
+#include <iostream>
+#include <map>
+
+using namespace std;
+int main() {
+	int num;
+	map<int, int> input;
+	for (int i = 1,num; i <= 50; i++) {
+		cin >> num;
+		input.insert(pair<int, int>(num,i));
+	}
+	cin >> num;
+	map<int,int>::iterator iter = input.find(num);
+	if (iter->second < 6) cout << "A+" ;
+	else if (iter->second < 16) cout << "A0";
+	else if (iter->second < 31) cout << "B+";
+	else if (iter->second < 36) cout << "B0";
+	else if (iter->second < 46) cout << "C+";
+	else if (iter->second < 49) cout << "C0";
+	else if (iter->second < 51) cout << "F";
+	return 0;
+}
