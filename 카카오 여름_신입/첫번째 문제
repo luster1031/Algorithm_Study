@@ -1,0 +1,78 @@
+#include<iostream>
+#include<vector>
+#include<string.h>
+#include <stdlib.h>
+using namespace std;
+
+string solution(int n, int k, vector<string> cmd) {
+	string answer = "";
+	int befor_num = 0;
+	int * check = new int[n];
+	for (int i = 0; i < n; i++) {
+		check[i] = 1;
+	}
+
+	string a;
+	for (int i = 0 ; i < n; i++) {
+		a = cmd[i];
+
+		if (a[0] == 'U') {
+			int j = 0;
+			int i = 1;
+			for (; j < a[2] - '0'; i++) {
+				printf("%d\n", (abs(k - i)) % n);
+				if (check[(abs(k -i)) % n]) {
+					j++;
+				}
+			}
+			k = (abs((k -( i-1)) )% n);
+		}
+		else if (a[0] == 'D') {
+			int j = 0;
+			int i = 1;
+			for (; j < a[2] - '0'; i++) {
+				if (check[(i + k) % n]) {
+					j++;
+				}
+			}
+			k = ((k + (i-1)) % n);
+		}
+		else if (a[0] == 'C') {
+			check[k] = 0;
+			befor_num = k;
+			int count = 1;
+			if (k == n - 1) {
+				while (!check[abs((k - count)) % n]) {
+					count++;
+				}
+				k = (abs(k - count)) % n;
+			}
+			else {
+				while (!check[(k + count) % n]) {
+					count++;
+				} 
+				k = (k + count) % n;
+			}
+			
+		}
+		else if (a[0] == 'Z') {
+			check[befor_num] = 1;
+		}
+	}
+	a.clear();
+	
+	answer.resize(n);
+	for (int i = 0; i < n; i++) {
+		if (!check[i])
+			answer[i] = 'X';
+		else
+			answer[i] = 'O';
+	}
+
+	return answer;
+}
+int main() {
+	string a = solution(8, 2, { "D 2", "C", "U 3", "C", "D 4", "C", "U 2", "Z", "Z" });
+	
+	return 0;
+}
