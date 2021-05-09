@@ -1,0 +1,69 @@
+#include <iostream>
+#include<algorithm>
+using namespace std;
+
+
+int N;
+int *row_ch;
+int ** mento;
+int *ability ;
+int max_num = 0;
+
+ int cal( int row, int sum, int befor_num,bool check) {
+
+		for (int i = 1; i <= N; i++) {
+			if (!row_ch[i] && mento[row][i]) {
+				
+				row_ch[i] = 1;
+				if (check) {
+					max_num += max(max_num,max(sum, cal(i, befor_num * ability[i], 0, false)));
+				}
+				else {
+					max_num += max(cal(i, 0, ability[i], true), cal(i, 0, 0, false));
+				}
+				row_ch[i] = 0;
+			}
+		}
+
+	return sum;
+}
+
+int main() {
+	int max_output = 0;
+	cin >> N;
+
+	row_ch = new int[N + 1];
+	mento = new int*[N + 1];
+	ability = new int[N + 1];
+	for (int i = 0; i <= N; i++) {
+		mento[i] = new int[N+1];
+		memset(mento[i], 0, sizeof(int)*(N+1));
+	}
+	memset(row_ch, 0, sizeof(int)*(N + 1));
+	memset(ability, 0, sizeof(int)*(N + 1));
+
+
+	for (int i = 2,num; i <= N; i++) {
+		cin >> num;
+		mento[i][num] = 1;
+		mento[num][i] = 1;
+	}
+
+	for (int i = 1,num; i <= N; i++) {
+		cin >> num;
+		ability[i] = num;
+	}
+
+
+	//int cal(int count, int row, int sum, int befor_num,bool check) 
+	row_ch[1] = 1;
+	cal(1,0,ability[1],true);
+	int num1 = max_num;
+	row_ch[1] = 0;
+	max_num = 0;
+	cal(1, 0, 0, false);
+	int num2 = max_num;
+	cout << max(num1, num2);
+
+	return 0;
+}
