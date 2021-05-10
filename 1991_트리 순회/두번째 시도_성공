@@ -1,0 +1,53 @@
+#include <string>
+#include <iostream>
+#include <list>
+#include <vector>
+using namespace std;
+
+struct node {
+	char left;
+	char right;
+};
+
+struct node arr[26];
+
+void pre(char root) {
+	if (root == '.')
+		return;
+	cout << root;
+	pre(arr[root - 'A'].left);
+	pre(arr[root - 'A'].right);
+}
+
+void middle(char root) {
+	if (root == '.')return;
+	middle(arr[root - 'A'].left);
+	cout << root;
+	middle(arr[root - 'A'].right);
+	
+}
+
+void after(char root) {
+	if (root == '.')return;
+	after(arr[root - 'A'].left);
+	after(arr[root - 'A'].right);
+	cout << root;
+	
+	
+}
+int main() {
+	int N;
+	cin >> N;
+	char one, two, three;
+	for (int i = 0; i < N; i++) {
+		cin >> one >> two >> three;
+		arr[one-'A'].left = two;
+		arr[one - 'A'].right = three;
+	}
+
+	pre('A');
+	cout << '\n';
+	middle('A');
+	cout << '\n';
+	after('A');
+}
