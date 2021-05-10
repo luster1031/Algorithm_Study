@@ -1,0 +1,39 @@
+
+int main() {
+	list<char> input;
+	vector<char> befor;
+
+	int N;
+	cin >> N;
+	char one, two, three;
+	for (int i = 0; i < N; i++) {
+		cin >> one >> two >> three;
+		if (input.empty())
+			input.push_back(one);
+
+		for(list<char>::iterator iter = input.begin(); iter!= input.end(); iter++){
+			if (*iter == one) {
+				if(two != '.')
+					input.insert(iter, two);
+				if (three != '.') {
+					iter++;
+					input.insert(iter, three);
+				}
+				break;
+			}
+		}
+		
+
+	}
+	for (list<char>::iterator iter= input.begin();iter != input.end() ; iter++) {
+		if (*iter != 'A') {
+
+		}
+	}
+
+	for (list<char>::iterator iter = input.begin(); iter != input.end(); iter++) {
+		cout << *iter;
+	}
+	
+
+}
