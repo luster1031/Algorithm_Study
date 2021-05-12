@@ -1,0 +1,94 @@
+#include <iostream>
+#include <string>
+
+using namespace std;
+int output_size = 10001;
+string output_s;
+int right(int right_num) {
+	string l = to_string(right_num);
+	if (l.size() != 4) {
+		for (int i = 0; i < 4 - l.size(); i++) {
+			l.insert(i, "0");
+		}
+	}
+	char first = l[l.size()-1];
+	for (int i = l.size()-2; i >= 0; i--) {
+		l[i] = l[i+1];
+	}
+	l[0] = first;
+
+	right_num = stoi(l);
+	return right_num;
+}
+
+int left(int left_num) {
+	
+	string l = to_string(left_num);
+	
+	if (l.size() != 4) {
+		for (int i = 0; i < 4 - l.size(); i++) {
+			l.insert(i, "0");
+		}
+	}
+	char first = l[0];
+	for (int i = 1; i < l.size(); i++) {
+		l[i - 1] = l[i];
+	}
+	l[l.size() - 1] = first;
+
+	left_num = stoi(l);
+	return left_num;
+}
+string compare(int start, int two, string output) {
+	if (output.size() < output_size) {
+		if (start > two) {
+			if (output.size() < output_size) {
+				output_size = output.size();
+			}
+			output.pop_back();
+			return output;
+		}
+		else if (start == two) {
+			if (output.size() < output_size) {
+				output_size = output.size();
+				output_s = output;
+				return output;
+			}
+			return output;
+		}
+		else {
+			output.push_back('D');
+			output = compare((start * 2) % 10000, two, output);
+			output.push_back('L');
+			output = compare(left(start), two, output);
+			output.push_back('R');
+			output = compare(right(start), two, output);
+			output.push_back('S');
+			int Temporary = start - 1;
+			if (Temporary == 0)
+				Temporary = 9999;
+			output = compare(Temporary, two, output);
+		}
+	}
+	output.pop_back();
+	return output;
+}
+
+
+int main() {
+	
+	int N;
+	cin >> N;
+	int one, two;
+
+  while (N--) {
+		cin >> one;
+		cin >> two;
+		compare(min(one, two),max(one, two),"");
+		cout << output_s << '\n';
+	}
+	
+	
+
+	return 0;
+}
