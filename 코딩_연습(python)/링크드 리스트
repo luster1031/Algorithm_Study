@@ -1,0 +1,27 @@
+//노드 추가하기
+class node:
+  def __init__(self, data, next=None):
+    self.data = data
+    self.next = next
+    
+ //노드1이랑 노드2랑 연결
+ n1 = node(1)
+ n2 = node(2)
+ n1.next = n2
+ head = n1
+ 
+ 
+ 
+ //노드 데이터 추가
+ def add(data):
+  n_head = head
+  while n_head.next:
+    n_head = n_head.next
+  n_head.next = node(data)
+  
+//5에서 10추가
+n1 = node(5)
+head = n1
+for index in range(6,10)
+  add(index)
+  
