@@ -25,3 +25,10 @@ head = n1
 for index in range(6,10)
   add(index)
   
+  
+//노드 출력
+node = head
+while node.next:
+  print(node.data)
+  node = node.next
+print(node.data)
