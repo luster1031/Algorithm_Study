@@ -1,0 +1,40 @@
+해쉬 테이블: 키에 데이터를 저장하는 데이터 구조
+
+
+key를 가지고 해쉬 함수를 통해 -> 해쉬 주소를 알아냄 -> 해시 테이블에서 결과 값 찾음
+
+
+//해쉬 테이블 만들기 - 0으로 초기화
+hash_list = lst([0 for i range(20)])
+
+//해쉬 함수 만들기
+def hash_fun(key):
+  return key % 20
+
+//해쉬에서 key값 얻어내기 - hash함수 이용
+def g_key(data):
+  return hash(data)
+
+//해쉬 테이블 저장
+def save_data(data, value):
+  hash_add = hash_fun(g_key(data))
+  hash_list[hash_address] = value
+
+//해쉬 테이블 읽기
+def read_data(data):
+  hash_add = hash_fun(g_key(data))
+  return hash_list[hash_add]
+
+//해쉬 저장
+save_data('han','1234')
+save_data('na', '4567')
+save_data('hi', '89101')
+
+
+
+-> 여기서 해쉬 테이블 read_data('han')을 하면 다른 값이 나온다
+  이건 중복을 고려하지 않은 방법인데
+  
+  충돌을 해결하려면 chaining(리스트 사용),
+  Linear Probing(충돌발생시 다음 add부터 빈공간에 저장)
+  
