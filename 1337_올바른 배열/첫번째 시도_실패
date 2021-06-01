@@ -1,0 +1,33 @@
+#include <iostream>
+#include <algorithm>
+#include <stdlib.h>
+
+using namespace std;
+
+
+int main() {
+	int size; 
+	cin >> size;
+	int *input = new int[size];
+
+	
+	for (int i = 0, num = 0; i < size; i++) {
+		cin >> num;
+		input[i] = num;
+	}
+
+	sort(input, input + size);
+
+	int count =0 ;
+	int output = 0;
+	for (int i = 0; i < size; i++) {
+		for (int j = i; j < i + 4 && j+1 < size; j++) {
+			if (input[j] == input[j + 1] - 1)
+				count++;
+		}
+		output = max(count, output);
+		count = 0;
+	}
+	cout << 5- output;
+	return 0;
+}
