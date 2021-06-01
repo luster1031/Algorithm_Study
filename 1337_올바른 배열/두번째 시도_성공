@@ -1,0 +1,36 @@
+#include <iostream>
+#include <algorithm>
+#include <stdlib.h>
+
+using namespace std;
+
+
+int main() {
+	int size; 
+	cin >> size;
+	int *input = new int[size];
+
+	
+	for (int i = 0, num = 0; i < size; i++) {
+		cin >> num;
+		input[i] = num;
+	}
+
+	sort(input, input + size);
+
+	int count = 0;
+	int output = 0;
+	for (int i = 0; i < size; i++) {
+		for (int j = 0, k= 0; j < 5 && (i+k< size);j++) {
+			if (input[i + k] == input[i]+j) {
+				count++;
+				k++;
+			}
+		}
+		output = max(count, output);
+		count = 0;
+	}
+	
+	cout << 5- output;
+	return 0;
+}
