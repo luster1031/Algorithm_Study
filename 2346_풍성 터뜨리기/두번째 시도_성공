@@ -1,0 +1,23 @@
+#include <iostream>
+
+using namespace std;
+
+int main() {
+	int testcase;
+	int frist = 0, count =0;
+	cin >> testcase;
+	int check[1000001] = {0};
+	for (int i = 0,num; i < testcase; i++) {
+		cin >> num;
+		if (!check[num + 1]) {
+			check[num]++;
+			count++;
+		}
+		else {
+			check[num + 1]--;
+			check[num]++;
+		}
+	}
+	cout << count;
+	return 0;
+}
