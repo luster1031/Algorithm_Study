@@ -1,0 +1,17 @@
+#include <iostream>
+
+using namespace std;
+
+int main() {
+	int testcase;
+	int frist = 0, count =0;
+	cin >> testcase;
+	for (int i = 0,num; i < testcase; i++) {
+		cin >> num;
+		if (frist < num)
+			count++;
+		frist = num;
+	}
+	cout << count;
+	return 0;
+}
