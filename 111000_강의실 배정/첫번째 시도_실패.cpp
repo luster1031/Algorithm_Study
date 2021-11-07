@@ -38,7 +38,6 @@ int main() {
 			memset(check, false, sizeof(check));
 		}
 	}
-	
 	cout << min_room;
 	
 	return 0;
