@@ -1,0 +1,24 @@
+#include <iostream>
+
+using namespace std;
+
+
+int main() {
+	
+	int L, P, N;
+	int count = 1;
+	int output = 0;
+	while (1) {
+		cin >> L >> P >> N;
+		if (L == 0 && P == 0 && N == 0) {
+			return 0;
+		}
+		output = (N / P)*L;
+		if (N%P > L)
+			output += L - (N%P);
+		else
+			output += N % P;
+		cout << "Case " << count++<<": "<<output<<"\n";
+	}
+	return 0;
+}

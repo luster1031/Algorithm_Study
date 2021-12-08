@@ -1,0 +1,27 @@
+#include<stdio.h>
+int main() {
+	int N, M;
+	int N_count = 0,M_count = 0,another_count = 0;
+	int answer;
+	scanf("%d %d", &N,&M);
+
+	for(int i = 5; i <= N; i *= 5){
+		N_count += N / i;
+	}
+		
+
+	for (int i = 5; i <= M; i *= 5) {
+		M_count += M / i;
+	}
+
+	if (N - M != 1 && N - M != 3) {
+		for (int i = 5; i <= N - M; i *= 5) {
+			another_count += (N - M) / i;
+		}
+	}
+	answer = N_count - M_count - another_count;
+
+	printf("%d", answer);
+
+	return 0;
+}

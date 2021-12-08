@@ -1,0 +1,25 @@
+#include <stdio.h>
+
+int main() {
+	int L, U;
+	int sum = 0; //첫번째 숫자 자리수
+	int i = 0;
+	scanf("%d %d", &L, &U);
+
+	//첫번째 숫자 자리수 구하기
+	for (i = L; i >= 10; i /= 10) {
+		sum += i % 10;
+	}
+	sum += i;
+	i = U - L;	//첫 숫자와 끝 숫자 차이;
+
+	if (i % 2 == 0) {
+
+		printf("%d",((i / 2) * (2*sum + i)) + ((i/2) + sum));
+		
+	}
+	else {
+		printf("%d", ((i + 1) / 2)*(2*sum + i));
+	}
+	return 0;
+}

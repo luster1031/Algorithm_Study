@@ -1,0 +1,33 @@
+#include <stdio.h>
+
+int main() {
+	int X;
+
+	int col = 1, row = 1;
+	scanf_s("%d", &X);
+
+	while (X > 1) {
+		if (col == 1) {
+			row++;
+			X--;
+			while (row > 1 && X > 1) {
+				row--;
+				col++;
+				X--;
+			}
+		}
+		else if (row == 1) {
+			col++;
+			X--;
+			while (col > 1 && X > 1) {
+				row++;
+				col--;
+				X--;
+			}
+		}
+
+	}
+	printf("%d/%d", col, row);
+
+	return 0;
+} 

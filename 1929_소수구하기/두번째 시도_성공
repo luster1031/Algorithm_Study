@@ -1,0 +1,25 @@
+#include <stdio.h>
+#include <math.h>
+
+int main() {
+	int start, end;
+	int count = 0;
+	int sqrt_start;
+	scanf("%d %d", &start, &end);
+	for (; start <= end; start++) {
+		count = 0;
+		sqrt_start = sqrt(start);
+		for (int i = 1; i <= sqrt_start; i++) {
+			if (start % i == 0) {
+				count++;
+				if (count > 2)
+					break;
+			}
+		}
+		if (count == 1 && start != 1) {
+			printf("%d\n", start);
+		}
+	}
+	
+	return 0;
+}

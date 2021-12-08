@@ -1,0 +1,20 @@
+#include <iostream>
+#include<string>
+using namespace std;
+
+
+int main() {
+	int check = 0;
+	char check_str[5] = "UCPC";
+	string input;
+	getline(cin, input);
+
+	for (int i = 0; i < input.length(); i++) {
+		if (check_str[check] == input[i]) {
+			check++;
+		}
+	}
+	if (check == 4)cout << "I love UCPC";
+	else cout << "I hate UCPC";
+	return 0;
+}

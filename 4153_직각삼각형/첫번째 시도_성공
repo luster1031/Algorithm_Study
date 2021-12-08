@@ -1,0 +1,36 @@
+#include<math.h>
+#include<stdio.h>
+
+int main() {
+	int one, two, three;
+	int big;
+	int other, other2;
+	while (1){
+		scanf("%d %d %d",&one, &two, &three);
+		if (one == 0)
+			return 0;
+		if (one > two && one > three) {
+			big = one;
+			other = two;
+			other2 = three;
+		}
+		else if(two > one && two > three) {
+			big = two;
+			other = one;
+			other2 = three;
+		}
+		else if (three > one && three > two) {
+			big = three;
+			other = two;
+			other2 = one;
+		}
+
+		if (pow(big, 2)== pow(other,2)+pow(other2,2)) {
+			printf("right\n");
+		}
+		else {
+			printf("wrong\n");
+		}
+	}
+	return 0;
+}

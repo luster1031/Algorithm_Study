@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 #include <stdio.h>
 #include <stdbool.h>
  
@@ -47,3 +48,47 @@ int main() {
 	}
 	return 0;
  }
+=======
+#include<iostream>
+#include<map>
+using namespace std;
+
+int main() {
+	map<int, int> input;
+	int output[1000001] = { 0 };
+	int testcase,num;
+	bool check;
+	int max_num = 0;
+
+	int my_row, my_value;
+	cin >> testcase;
+
+	for(int row = 0; row<testcase; row++) {
+		cin >> num;
+		input.insert(pair<int, int>(num, row));
+		if (max_num < num)max_num = num;
+	}
+	for (map<int,int>::reverse_iterator i = input.rbegin(); i != input.rend(); i++) {
+		if (i->second == 0)output[i->second] = -1;
+		my_value = i->first;
+		my_row = i->second;
+		check = false;
+
+		for (map<int, int>::reverse_iterator point = i; point != input.rend(); point--) {
+			if (point->first > my_value && point->second > my_row) {
+				output[my_row] = point->first;
+				check = true;
+				break;
+			}
+			if (point->first == max_num)break;
+		}
+
+		if (!check)output[my_row] = -1;
+	}
+	
+	for (int i = 0; i < input.size(); i++) {
+		cout << output[i] << " ";
+	}
+	return 0;
+}
+>>>>>>> copy2/main

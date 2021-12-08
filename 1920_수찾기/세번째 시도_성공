@@ -1,0 +1,31 @@
+#include<iostream>
+#include<vector>
+#include<set>
+using namespace std;
+
+int main() {
+	int count;
+	vector<int> input;
+	set<int> compare;
+
+	cin >> count;
+	for (int i = 0, num; i < count; i++) {
+		cin >> num;
+		compare.insert(num);
+	}
+
+	cin >> count;
+	for (int i = 0,num; i < count; i++) {
+		cin >> num;
+		input.push_back(num);
+	}
+
+	
+	for (int i = 0; i < input.size(); i++) {
+		if (compare.find(input[i]) != compare.end())
+			cout << 1 << '\n';
+		else
+			cout << 0 << '\n';
+	}
+	return 0;
+}

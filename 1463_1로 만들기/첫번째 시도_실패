@@ -1,0 +1,36 @@
+#include <iostream>
+
+using namespace std;
+
+int cal(int small, int big) {
+	int tmp;
+	if (small > big) {
+		tmp = big;
+		big = small;
+		small = tmp;
+	}
+	while (big% small != 0) {
+		tmp = small;
+		small = big % small;
+		big = tmp;
+	}
+	return small;
+}
+int main() {
+	int subin, brother;
+	int one, two;
+
+
+	cin >> brother >> subin;
+	cin >> one;
+	one -= subin;
+	if (one < 0)one *= -1;
+	for(int i =1; i<brother; i++) {
+		cin >> two;
+		two -= subin;
+		if (two < 0)two *= -1;
+		one = cal(one, two);
+	}
+	cout << one;
+	return 0;
+}

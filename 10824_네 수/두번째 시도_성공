@@ -1,0 +1,21 @@
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+int main() {
+	int input1,input2;
+	string number1;
+	string number2;
+
+	//문자 받기
+	cin >> input1 >> input2;
+	number1 = to_string(input1) + to_string(input2);
+
+	cin >> input1 >> input2;
+	number2 = to_string(input1) + to_string(input2);
+
+	long long answer = stoll(number1) + stoll(number2);
+	cout << answer;
+	return 0;
+}

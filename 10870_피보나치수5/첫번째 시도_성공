@@ -1,0 +1,24 @@
+#include<iostream>
+
+using namespace std;
+
+
+int testcase;
+
+int loop(int frist, int second, int count) {
+	if (count >= testcase) {
+		cout << second;
+		return 0;
+	}
+	loop(second, frist + second, count + 1);
+	return 0;
+}
+
+int main() {
+	cin >> testcase;
+	if (testcase == 0) {
+		cout << "0"; return 0;
+	}
+	loop(0, 1, 1);
+	return 0;
+}

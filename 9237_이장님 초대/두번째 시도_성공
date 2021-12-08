@@ -1,0 +1,23 @@
+#include <iostream>
+#include <algorithm>
+using namespace std;
+
+
+int main() {
+	int count;
+	int max_num = 0;
+	int input[100001];
+	cin >> count;
+
+	for (int i = 0,num; i < count; i++) {
+		cin >> input[i];
+	}
+	sort(input, input + count);
+
+	for (int i = count - 1,add =2; i >= 0; i--) {
+		max_num = max(input[i] + add, max_num);
+		add++;
+	}
+	cout << max_num;
+	return 0;
+}

@@ -1,0 +1,65 @@
+
+#include <stdio.h>
+#include <math.h>
+int main() {
+	int input[10001] = { 0,-1,0 };//에라토스테네스의 체
+	int minority[10001] = { 0 };//소수만 따로 
+	int i= 2, j = 2;
+
+	//기억을 했다가
+	//짝수 / 2 부터 시작. 
+
+	int testcase;
+	int even_num;
+	int old_even_num = 2;
+	int minority_count = 0;
+
+	scanf("%d", &testcase);
+	
+	
+	while (testcase--) {
+		scanf("%d", &even_num);
+		for (int i = 2; i < sqrt(even_num); i++) {
+			for (int j = old_even_num/i + 1; i * j <= even_num; j++) {
+				input[i * j] = -1;
+			}
+		}
+		
+
+		//소수 따로 저장
+		for (int i = old_even_num; i < even_num; i++) {
+			if (input[i] != -1) {
+				minority[minority_count++] = i;
+			}	
+		}
+		old_even_num = even_num;
+		//input[even_num] = minority_count;
+
+		//소수의 짝수이면
+		if (minority_count % 2 == 0) {
+			minority_count -= 1;
+		}
+		int frist, second;
+		int minority_check;
+		int minor_row = minority_count % 2 +1;
+		while(1){
+			minority_check = minority[minor_row];
+			if (input[even_num - minority_check] != -1) {
+				frist = minority[minor_row];
+				second = even_num - minority[minor_row];
+				if (frist > second) {
+					printf("%d %d\n", second, frist);
+				}
+				else {
+					printf("%d %d\n", frist, second);
+				}
+				break;
+			}
+			else {
+				minor_row++;
+			}
+		}
+	}
+
+	return 0;
+}

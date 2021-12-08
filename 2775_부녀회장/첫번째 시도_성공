@@ -1,0 +1,28 @@
+#include <stdio.h>
+
+int main() {
+	int input[15][15] = { 0 };
+	
+	int T;
+	int row, col;
+
+	scanf("%d", &T);
+	while (T--) {
+		scanf("%d %d", &row, &col);
+		for (int i = 0; i <= row; i++) {
+			for (int j = 0; j < col; j++) {
+				if (input[i][j] == 0) {
+					//row가 0층이거나 col이 1일때 col 대입
+					if (i == 0 || j == 0) {
+						input[i][j] = j+1;
+					}
+					else {
+						input[i][j] = input[i][j - 1] + input[i - 1][j];
+					}
+				}
+			}
+		}
+		printf("%d\n", input[row][col-1]);
+	}
+	return 0;
+}

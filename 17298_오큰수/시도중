@@ -1,0 +1,31 @@
+#include<iostream>
+#include<map>
+using namespace std;
+int main() {
+	map<int, int> input;
+	int output[5] = { 0 };
+	int testcase,num;
+	bool check;
+	int my_row, my_value;
+	cin >> testcase;
+
+	for(int row = 0; row<testcase; row++) {
+		cin >> num;
+		input.insert(num, row);
+	}
+	for (map<int,int>::iterator i = input.begin(); i != input.end(); i++) {
+		if (i == input.begin())output[i->second] = -1;
+		my_value = i->first;
+		my_row = i->second;
+		check = false;
+		for (map<int,int>::reverse_iterator point = input.begin()+3; point != input.rend(); i--) {
+			if (point->first > my_value && point->second > my_row) {
+				output[my_row] = point->first;
+				check = true;
+			}
+		}
+		if (!check)output[my_row] = -1;
+	}
+
+	return 0;
+}

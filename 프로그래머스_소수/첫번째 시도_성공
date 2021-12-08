@@ -1,0 +1,21 @@
+#include <string>
+#include <vector>
+#include <cmath>
+
+using namespace std;
+int cal[1000001] = { 1,1,0, };
+int solution(int n) {
+    int answer = 0;
+
+    for (int i = 2; i <= pow(n, 2); i++) {
+        for (int j = 2; i * j <= n && i * j < 1000001; j++) {
+            cal[i * j] = 1;
+        }
+    }
+
+    for (int i = 2; i <= n; i++) {
+        if (cal[i] == 0)
+            answer++;
+    }
+    return answer;
+}
