@@ -1,0 +1,24 @@
+#include <iostream>
+
+using namespace std;
+
+int main() {
+	int check[100001] = { -1,-1,1,-1,2, };
+	int num;
+	int count = 0;
+	cin >> num;
+
+	for (int i = 5; i <= num; i++) {
+		if (!check[i]) {
+			if (i % 5 == 0) {
+				check[i] =  i / 5;
+			}
+			else {
+				if (check[i - 5] == -1)check[i] = i / 2;
+				else { check[i] = check[i-5] + 1; }
+			}
+		}
+	}
+	cout << check[num];
+	return 0;
+}

@@ -1,0 +1,36 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+int main() {
+	string input;
+	int answer[26];
+	int small, big, count, empty;
+	int testcase;
+
+	while (1) {
+		getline(cin, input);
+		small = 0, big = 0, count = 0; empty = 0;
+		if (input.length() == 0)
+			return 0;
+		for (int i = 0; i < input.length(); i++) {
+			
+			
+			if (input.at(i) >= 'A' && input.at(i) <= 'Z') {
+				big++;
+			}
+			else if (input.at(i) >= 'a' && input.at(i) <= 'z') {
+				small++;
+			}
+			else if (input.at(i) == ' ') {
+				empty++;
+			}
+			else{
+				count++;
+			}
+		}
+		printf("%d %d %d %d\n", small, big, count, empty);
+		
+	}
+	return 0;
+}
