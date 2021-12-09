@@ -1,0 +1,47 @@
+#include <stdio.h>
+int main() {
+	int testcase, number;
+	char input[14];
+	int frist = 0;
+	int second = 9999;
+	char num;
+	scanf("%d", &testcase);
+
+
+	while (testcase--) {
+		scanf("%c", &num);
+		fgets(input, 14, stdin);
+
+		number = (input[0] - '0') * 1000 + (input[1] - '0') * 100 + (input[3] - '0') * 10 + (input[4] - '0');
+
+		if (number > frist)
+			frist = number;
+
+		number = (input[8] - '0') * 1000 + (input[9] - '0') * 100 + (input[11] - '0') * 10 + (input[12] - '0');
+
+		if (number < second)
+			second = number;
+
+
+	}
+	if (frist >= second)
+		printf("-1");
+	else {
+		printf("%d:", frist / 100);
+		if (frist % 100 < 10) {
+			printf("0%d ~ ", frist % 100);
+		}
+		else
+			printf("%d ~ ", frist % 100);
+
+
+		printf("%d:", second / 100);
+		if (second % 100 < 10) {
+			printf("0%d", second % 100);
+		}
+		else
+			printf("%d", second % 100);
+	}
+	return 0;
+}
+

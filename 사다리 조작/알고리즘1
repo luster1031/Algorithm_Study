@@ -1,0 +1,41 @@
+#include <iostream>
+
+using namespace std;
+
+bool check() {
+	//가로수
+		//세로수
+			//만약 -1공간에 1 --
+			//만약 +1공간에 1있으면 ++
+		
+		//만약 더한 값이 세로의 행수가 아니면 return false;
+	return false;
+}
+int input_Ladder() {
+	
+	//i - i 되는지 확인
+	check();
+		//값이 되면, 최솟값 리턴
+	
+	//양쪽 있으면 안됨
+	//최솟값의 개수 : 3넘으면 return 
+	//넣기
+	return 0;
+}
+int main() {
+	//N : 세로선의 개수, 
+	//M : 가로선의 개수
+	//h: 세로선마다 가로선을 놓을 수 있는 위치 개수
+	//최솟값 개수 = 0
+	//NMH
+	//for(int i = 0; i< M; i++)
+		//넣기
+
+	input_Ladder();
+	
+
+
+	//if == 0 || 3넘으면 -1
+	//아니면 값 출력
+	return 0;
+}
