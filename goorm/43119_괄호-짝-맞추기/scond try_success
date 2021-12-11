@@ -1,0 +1,42 @@
+package goorm;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+
+public class goorm2 {
+	static int [] check = new int[3];
+	static ArrayList<Character> cal= new ArrayList<>();
+	public static void main(String[] args) throws Exception {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		String input = br.readLine();
+		
+		Character what;
+		for(int i = 0; i<input.length();i++) {
+			switch(input.charAt(i)) {
+			case '(':
+			case '[':
+			case '{':
+				cal.add(input.charAt(i));
+				break;
+			case ']':
+				if(check('[')) {break;}
+				else {return;}
+			case '}':if(check('{')) {;break;}
+				else {return;}
+			case ')':if(check('(')) {break;}
+				else {return;}
+			}
+		}
+		System.out.println("True");
+	}
+	public static boolean check(Character what) {
+		if(cal.get(cal.size()-1)!= what || cal.size() == 0) {
+			System.out.println("False");
+			return false;
+		}else {
+			cal.remove(cal.size()-1);
+		}
+		return true;
+	}
+}
